@@ -59,7 +59,7 @@ ssh-based authentication <strong>as a convenience to you</strong>.  But in fact 
 <em>completely</em> separate program that you can disable (in the rc file) or replace
 with something else of your choice.</p>
 
-<p>For example, in both [smart http][http] and ldap-backed sshd, gitolite has no
+<p>For example, in both <a href="http.html">smart http</a> and ldap-backed sshd, gitolite has no
 role to play in creating users, setting up their passwords/keys, etc.</p>
 
 <h2>so you're basically saying you won't support "X"</h2>
@@ -84,7 +84,7 @@ authentication scheme you want.</p>
 
 <p>It also expects the <code>SSH_ORIGINAL_COMMAND</code> environment variable to contain the
 full command (typically starting with git-receive-pack or git-upload-pack)
-that the client sent.  Also, when using [smart http][http], things are somewhat
+that the client sent.  Also, when using <a href="http.html">smart http</a>, things are somewhat
 different: gitolite uses certain environment variables that it expects httpd
 to have set up.  Even the user name comes from the <code>REMOTE_USER</code> environment
 variable instead of as a command line argument in this case.</p>
