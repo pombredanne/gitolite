@@ -1,31 +1,22 @@
-<head>
-<title>
-what users (not admins) need to know about gitolite
-</title>
-<style>
-    body        { background: #fff; margin-left:  40px;   font-size:  0.9em;  font-family: sans-serif; max-width: 800px; }
-    h1          { background: #ffb; margin-left: -30px;   border-top:    5px  solid #ccc; }
-    h2          { background: #ffb; margin-left: -20px;   border-top:    3px  solid #ddd; }
-    h3          { background: #ffb; margin-left: -10px; }
-    h4          { background: #ffb; }
-    code        { font-size:    1.1em;  background:  #ddf; }
-    pre         { margin-left:  2em;    background:  #ddf; }
-    pre code    { font-size:    1.1em;  background:  #ddf; }
-</style>
 
-</head>
+<head><style>
+    body        { background: #fff; text-color: #000; margin-left:  40px;   font-size:  0.9em;  font-family: sans-serif; max-width: 800px; }
+    h1          { background: #ffb; text-color: #000; margin-left: -30px;   border-top:    5px  solid #ccc; }
+    h2          { background: #ffb; text-color: #000; margin-left: -20px;   border-top:    3px  solid #ddd; }
+    h3          { background: #ffb; text-color: #000; margin-left: -10px; }
+    h4          { background: #ffb; text-color: #000; }
+    code        { font-size:    1.1em;  background:  #ddf; text-color: #000; }
+    pre         { margin-left:  2em;    background:  #ddf; text-color: #000; }
+    pre code    { font-size:    1.1em;  background:  #ddf; text-color: #000; }
+</style></head>
 
 <p style="text-align:center">
     <a href="master-toc.html">master TOC</a>
 |
-    <a href="master-toc.html#user">chapter TOC</a>
+    <a href="index.html">main page</a>
 |
-    <a href="support.html">support</a>
-|
-    <a href="license.html">license</a>
+    <a href="index.html#license">license</a>
 </p>
-
-
 <h1>what users (not admins) need to know about gitolite</h1>
 
 <p>...written for the one guy in the world no one will think of as "just a normal
@@ -35,7 +26,24 @@ user" ;-)</p>
 available in the rest of the documentation, but it's scattered and sparse.
 Collecting all of it, or at least links to it, in one place sounds useful.</p>
 
-<p><a name="user_accessing_gitolite_"></a></p>
+<hr />
+
+<ul>
+<li><a href="user.html">what users (not admins) need to know about gitolite</a>
+<ul>
+<li>accessing gitolite</li>
+<li><a href="user.html#info">the info command</a></li>
+<li>digression: two kinds of repos</li>
+<li>other commands
+<ul>
+<li><a href="rules.html#perms">set/get additional permissions for repos you created</a></li>
+<li><a href="user.html#desc">adding a description to repos you created</a></li>
+</ul></li>
+<li>"site-local" commands</li>
+</ul></li>
+</ul>
+
+<hr />
 
 <h2>accessing gitolite</h2>
 
@@ -49,54 +57,28 @@ document), or an ssh command (like <code>ssh git@server info</code>).</p>
 <p>Note that you do <em>not</em> get a shell on the server -- the whole point of
 gitolite is to prevent that!</p>
 
-<p><a name="user_always_available_commands_"></a></p>
+<h2><a name="info"></a> the info command</h2>
 
-<h2>always available commands</h2>
-
-<p>The only command that is <em>always</em> available to every user is the <a href="info_expand.html#info" title="the &quot;info&quot; command"><code>info</code>
-command</a>, which tells you what version of gitolite and git are on the
-server, and what repositories you have access to.  The list of repos is very
-useful if you have doubts about the spelling of some new repo that you know
-was setup.</p>
-
-<p><a name="user_digression_two_kinds_of_repos_"></a></p>
+<p>The only command that is <em>always</em> available to every user is the <code>info</code>
+command (run <code>ssh git@host info -h</code> for help), which tells you what version of
+gitolite and git are on the server, and what repositories you have access to.
+The list of repos is very useful if you have doubts about the spelling of some
+new repo that you know was setup.</p>
 
 <h2>digression: two kinds of repos</h2>
 
 <p>Gitolite has two kinds of repos.  Normal repos are specified by their full
 names in the config file.  "Wildcard" repos are specified by a regex in the
-config file.  Try the <a href="info_expand.html#info" title="the &quot;info&quot; command"><code>info</code> command</a> and see if it shows any lines
-that look like regex patterns, (with a "C" permission in addition to the "R"
-and the "W").</p>
+config file.  Try the <a href="user.html#info"><code>info</code> command</a> and see if it shows any lines
+that look like regex patterns, (with a "C" permission).</p>
 
 <p>If you see any, it means you are allowed to create brand new repos whose names
 fit that pattern.  When you create such a repo, your "ownership" of it (as far
-as gitolite is concerned) is <em>automatically</em> recorded by creating a 1-line
-file called "gl-creater" (note spelling!) in the repo directory, with just
-your gitolite userid in it.</p>
+as gitolite is concerned) is <em>automatically</em> recorded by gitolite.</p>
 
-<p>This is for new repos you create.  But for repos that already existed and were
-migrated into gitolite by the admin, the admin has to manually create that
-"gl-creater" file, otherwise you won't be able to execute certain commands
-that you otherwise might have access to.</p>
+<h2>other commands</h2>
 
-<p>"Wildrepos" is an optional feature of gitolite that the admin has to
-explicitly enable.</p>
-
-<p><a name="user_commands_only_available_with_wildrepos_on_"></a></p>
-
-<h2>commands only available with "wildrepos" on</h2>
-
-<p><a name="user_listing_repos_you_created_"></a></p>
-
-<h3>listing repos you created</h3>
-
-<p>The info command will not show you your own wildcard repos.  To get that list,
-try the <a href="info_expand.html#expand" title="the &quot;expand&quot; command"><code>expand</code> command</a>.</p>
-
-<p><a name="user_set_get_additional_permissions_for_repos_you_created_"></a></p>
-
-<h3>set/get additional permissions for repos you created</h3>
+<h3><a name="perms"></a> set/get additional permissions for repos you created</h3>
 
 <p>The gitolite config may have several permissions lines for your repo, like so:</p>
 
@@ -120,10 +102,9 @@ namespace, starting with <code>pub/&lt;username&gt;/</code>).</p>
 
 <p>(he could also add other roles but then he needs to read the documentation).</p>
 
-<p>Once he does this, you can then use the <a href="setperms.html" title="handing out rights to wildcard-matched repos"><code>setperms</code> command</a> to set
-permissions for other users by specifying which users are in the list of
-"READERS", and which in "WRITERS".  That same section also talks about the
-<code>getperms</code> command as well.</p>
+<p>Once he does this, you can then use the <code>perms</code> command (run <code>ssh git@host
+perms -h</code> for help) to set permissions for other users by specifying which
+users are in the list of "READERS", and which in "WRITERS".</p>
 
 <p>If you think of READERS and WRITERS as "roles", it will help.  You can't
 change what access a role has, but you <em>can</em> say which users have that role.</p>
@@ -133,22 +114,9 @@ given read access to the special 'gitolite-admin' repo.  Sorry.  The idea is
 that your admin will tell you what "roles" he added into rules for your repos,
 and what permissions those roles have.</p>
 
-<p><a name="setdesc"></a></p>
+<h3><a name="desc"></a> adding a description to repos you created</h3>
 
-<h3>adding a description to repos you created</h3>
-
-<p>The <code>setdesc</code> and <code>getdesc</code> commands work similarly to the <code>setperms</code> and
-<code>getperms</code> commands.  You just say</p>
-
-<pre><code>echo "some description here" | ssh git@server setdesc pub/&lt;yourname&gt;/&lt;your_reponame&gt;
-</code></pre>
-
-<p>and if you want to check you just say</p>
-
-<pre><code>ssh git@server getdesc pub/&lt;yourname&gt;/&lt;your_reponame&gt;
-</code></pre>
-
-<p><a name="user_site_local_commands_"></a></p>
+<p>The <code>desc</code> command is extremely simple.  Run <code>ssh git@host desc -h</code> for help.</p>
 
 <h2>"site-local" commands</h2>
 
@@ -158,14 +126,10 @@ done by pushing something to a repo).</p>
 
 <p>To enable this, gitolite allows the admin to setup scripts in a special
 directory that users can then run.  Gitolite comes with a set of working
-scripts (in "contrib/adc") that your admin may install, or may use as a
-starting point for his own, if he chooses.</p>
+scripts that your admin may install, or may use as a starting point for his
+own, if he chooses.</p>
 
 <p>Think of these commands as equivalent to those in <code>COMMAND_DIR</code> in <code>man
 git-shell</code>.</p>
 
-<p>Most of the shipped ADCs are briefly described <a href="shipped_ADCs.html" title="brief descriptions of the shipped ADCs (admin-defined commands)">here</a>, with links
-to more details if available.  However, <strong>please understand</strong> that these
-commands may not be available, or their behaviour may have been changed to
-suit local requirements, and of course new ones may have been added.  You'll
-have to ask your local admin for answers, not me!</p>
+<p>You can get a list of available commands by running <code>ssh git@host help</code>.</p>

@@ -1,96 +1,51 @@
-<head>
-<title>
-delegating access control responsibilities
-</title>
-<style>
-    body        { background: #fff; margin-left:  40px;   font-size:  0.9em;  font-family: sans-serif; max-width: 800px; }
-    h1          { background: #ffb; margin-left: -30px;   border-top:    5px  solid #ccc; }
-    h2          { background: #ffb; margin-left: -20px;   border-top:    3px  solid #ddd; }
-    h3          { background: #ffb; margin-left: -10px; }
-    h4          { background: #ffb; }
-    code        { font-size:    1.1em;  background:  #ddf; }
-    pre         { margin-left:  2em;    background:  #ddf; }
-    pre code    { font-size:    1.1em;  background:  #ddf; }
-</style>
 
-</head>
+<head><style>
+    body        { background: #fff; text-color: #000; margin-left:  40px;   font-size:  0.9em;  font-family: sans-serif; max-width: 800px; }
+    h1          { background: #ffb; text-color: #000; margin-left: -30px;   border-top:    5px  solid #ccc; }
+    h2          { background: #ffb; text-color: #000; margin-left: -20px;   border-top:    3px  solid #ddd; }
+    h3          { background: #ffb; text-color: #000; margin-left: -10px; }
+    h4          { background: #ffb; text-color: #000; }
+    code        { font-size:    1.1em;  background:  #ddf; text-color: #000; }
+    pre         { margin-left:  2em;    background:  #ddf; text-color: #000; }
+    pre code    { font-size:    1.1em;  background:  #ddf; text-color: #000; }
+</style></head>
 
 <p style="text-align:center">
     <a href="master-toc.html">master TOC</a>
 |
-    <a href="master-toc.html#delegation">chapter TOC</a>
+    <a href="index.html">main page</a>
 |
-    <a href="support.html">support</a>
-|
-    <a href="license.html">license</a>
+    <a href="index.html#license">license</a>
 </p>
-
-
 <h1>delegating access control responsibilities</h1>
 
-<hr />
+<p>Delegation allows you to divide up a large conf file into smaller groups of
+repos (called <strong>subconf</strong>s) and hand over responsibility to manage them to
+<strong>sub-admin</strong>s.  Gitolite can prevent one sub-admin from being able to set
+access rules for any other sub-admin's repos.</p>
 
-<p><a name="delegation_lots_of_repos_lots_of_users_"></a></p>
+<p>Delegation is achieved by combining two gitolite features: <a href="deleg.html#subconf">subconf</a> and the
+<a href="vref.html#NAME">NAME VREF</a>.</p>
 
-<h2>lots of repos, lots of users</h2>
+<p>To understand delegation, read both those links then come back to this
+example.</p>
 
-<p>Gitolite tries to make it easy to manage access to lots of users and repos,
-exploiting commonalities wherever possible.  It lets you specify bits and
-pieces of the access control separately -- i.e., <em>all</em> the access specs for a
-certain repo need not be together; they can be scattered, which makes it
-easier to manage the sort of slice and dice needed in that example.</p>
-
-<p>But eventually the config file will become too big.  If you let only one
-person have control, he could become a bottleneck.  If you give it to multiple
-people, they might make mistakes or stomp on each others' work accidentally.</p>
-
-<p>The best way is to divide up the config file and give parts of it to different
-people.</p>
-
-<p>Ideally, we would delegate authority for <em>groups</em> of repos, not individual
-repos, otherwise it doesn't scale.  It would also be nice if we could prevent
-an admin from creating access rules for <em>any</em> repo in the system -- i.e., set
-limits on what repos he can control.  This would be a nice "security" feature.</p>
-
-<p>Delegation offers a way to do all that.  You can allow access control rules
-for a set of repos to be specified in a <strong>subconf</strong> file and allow someone (a
-<strong>sub-admin</strong>) to make changes within that file.  (Note: sub-admins cannot
-create or remove users).</p>
-
-<p><a name="delegation_how_to_use_delegation_"></a></p>
-
-<h2>how to use delegation</h2>
-
-<p>First, you group your repos however you want.  In the example below, I'm
-considering firefox and lynx (projects at the root of the gitolite server) as
-well as <em>any</em> repo inside the <code>browsers</code> subdirectory, as members of the
-<code>webbrowsers</code> group.  Similarly for the others.</p>
+<h2>example</h2>
 
 <pre><code>@webbrowsers        = firefox lynx browsers/..*
 @webservers         = apache nginx servers/..*
 @malwares           = conficker storm ms/..*
     # side note: if anyone objects, we claim ms stands for "metasploit" ;-)
-</code></pre>
 
-<p>Each of these groups is called a <strong>subconf</strong> from here on.</p>
-
-<p>Then you designate a <strong>sub-admin</strong> to manage each subconf, and you ensure
-(using <a href="aac.html#NAME" title="restricting pushes by dir/file name using NAME/">this</a> gitolite feature) that a sub-admin can make changes only
-to her subconf file and nothing else.</p>
-
-<p>For example, Alice is in charge of all web browser development projects.
-Similarly, Bob takes care of web servers, and Mallory, as <a href="http://en.wikipedia.org/wiki/Alice_and_Bob#List_of_characters">tradition</a>
-dictates, is in charge of malware ;-)</p>
-
-<pre><code># the admin repo access was probably like this to start with:
+# the admin repo access was probably like this to start with:
 repo gitolite-admin
     RW+                                     = sitaram
 # now add these lines to the config for the admin repo
     RW                                      = alice bob mallory
-    RW+ NAME/                               = sitaram
-    RW  NAME/conf/subs/webbrowsers          = alice
-    RW  NAME/conf/subs/webservers           = bob
-    RW  NAME/conf/subs/malwares             = mallory
+    RW  VREF/NAME/conf/subs/webbrowsers     = alice
+    RW  VREF/NAME/conf/subs/webservers      = bob
+    RW  VREF/NAME/conf/subs/malwares        = mallory
+    -   VREF/NAME/                          = alice bob mallory
 </code></pre>
 
 <p>Finally, you tell gitolite to pull in these files using the "subconf" command</p>
@@ -98,57 +53,61 @@ repo gitolite-admin
 <pre><code>subconf "subs/*.conf"
 </code></pre>
 
-<p>You can put this command anywhere in the main gitolite.conf file, but it's
-best to put it at the end.</p>
+<p>And that's it.</p>
 
-<p>Now alice can clone the admin repo, add a file called <code>conf/subs/webbrowsers</code>
-with whatever access rules she wants for the repositories under her control,
-commit and push.</p>
+<h2><a name="subconf"></a> the subconf command</h2>
 
-<p>And that's really all there is to it.</p>
+<p>Subconf is exactly like the include command in syntax:</p>
 
-<p><a name="subconf"></a></p>
-
-<h3>the subconf command</h3>
-
-<p>This command is much like the "include" command, but in addition it checks
-that a subconf does not contain ACL rules for repos that are outside its
-purview.</p>
-
-<p>In the above example, the <code>webbrowsers</code> subconf file can only have access
-control lines for firefox, lynx, and anything under "browsers/" because those
-are the elements of the <code>@webbrowsers</code> group.  (This is checked using a regex
-match, which is why "anything under browsers/" is written <code>browsers/..*</code>)</p>
-
-<p>In more precise terms:</p>
-
-<ul>
-<li>the subconf name is simply the basename of the conf file, without the
-.conf extension, and</li>
-<li>the elements of an <code>@</code> group of the same name are then used to limit what
-repos the subconf can have ACL lines for.</li>
-</ul>
-
-<p>(Additional notes: it can also contain lines for an actual repo called
-<code>webbrowsers</code>, or, in big-config mode, for a group called <code>@webbrowsers</code>).</p>
-
-<p><a name="delegation_backward_compatibility_"></a></p>
-
-<h3>backward compatibility</h3>
-
-<p>For backward compatibility, if no <code>subconf</code> commands have been seen at the end
-of processing the main config file, gitolite pretends you appended</p>
-
-<pre><code>subconf "conf/fragments/*.conf"
+<pre><code>subconf "foo/bar.conf"
 </code></pre>
 
-<p>to the end of the file.</p>
+<p>but while reading the included file, it sets a "subconf name" of "foo".</p>
 
-<p><a name="delegation_security_notes_"></a></p>
+<p>When a subconf name is in effect, there are some restrictions on what repos
+can be managed.</p>
+
+<p>For example, in the include file in the above example, you can only have
+"repo" lines for:</p>
+
+<ul>
+<li>a repo called "foo"</li>
+<li>a group called "@foo" defined outside the include file</li>
+<li>a member of a group called "@foo" (again, defined outside)</li>
+<li>a repo that matches a member of a group called "@foo" if that member is a
+regular expression pattern</li>
+</ul>
+
+<p>Here's an example.  If the main conf file contains</p>
+
+<pre><code>@foo    =   aa bb cc/..*
+</code></pre>
+
+<p>then the subconf can only accept repo statements that refer to 'foo', '@foo',
+'aa', 'bb', or any repo whose name starts with 'cc/'.</p>
+
+<h3>how the "subconf name" is derived</h3>
+
+<p>For subconf lines that look just like include statements, i.e.,</p>
+
+<pre><code>subconf "foo/bar.conf"
+subconf "frob/*.conf"
+    # assume frob has files aa.conf, bb.conf
+</code></pre>
+
+<p>the subconf name as each file is being processed is the base name of the file.
+This means it would be "bar" for the first line, "aa" when processing
+"frob/aa.conf", and "bb" when processing "frob/bb.conf".</p>
+
+<p>A variation of subconf exists that can explicitly state the subconf name:</p>
+
+<pre><code>subconf foo "frob/*.conf"
+</code></pre>
+
+<p>In this variation, regardless of what file in "frob/" is being read, the
+subconf name in effect is "foo".</p>
 
 <h2>security notes</h2>
-
-<p><a name="delegation_group_names_"></a></p>
 
 <h3>group names</h3>
 
@@ -162,8 +121,6 @@ redefine or extend them in your own subconf file.  If you must extend a group
 
 <p>Group names you define in your subconf will not clash even if the exact same
 name is used in another subconf file, so you need not worry about that.</p>
-
-<p><a name="delegation_delegating_pubkeys_"></a></p>
 
 <h3>delegating pubkeys</h3>
 
@@ -181,6 +138,5 @@ security problems (admin-A creates a pubkey for Admin-B, thus gaining access
 to all of Admin-B's stuff).</p>
 
 <p>If you feel the need to delegate even that, please just go the whole hog and
-give them separate gitolite instances!  It's pretty easy to setup the
-<em>software</em> itself system-wide, so that many users can use it; see the root
-install method in the install document.</p>
+give them separate gitolite instances (i.e., running under different gitolite
+hosting users)!</p>

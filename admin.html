@@ -1,85 +1,66 @@
-<head>
-<title>
-administering and running gitolite
-</title>
-<style>
-    body        { background: #fff; margin-left:  40px;   font-size:  0.9em;  font-family: sans-serif; max-width: 800px; }
-    h1          { background: #ffb; margin-left: -30px;   border-top:    5px  solid #ccc; }
-    h2          { background: #ffb; margin-left: -20px;   border-top:    3px  solid #ddd; }
-    h3          { background: #ffb; margin-left: -10px; }
-    h4          { background: #ffb; }
-    code        { font-size:    1.1em;  background:  #ddf; }
-    pre         { margin-left:  2em;    background:  #ddf; }
-    pre code    { font-size:    1.1em;  background:  #ddf; }
-</style>
 
-</head>
+<head><style>
+    body        { background: #fff; text-color: #000; margin-left:  40px;   font-size:  0.9em;  font-family: sans-serif; max-width: 800px; }
+    h1          { background: #ffb; text-color: #000; margin-left: -30px;   border-top:    5px  solid #ccc; }
+    h2          { background: #ffb; text-color: #000; margin-left: -20px;   border-top:    3px  solid #ddd; }
+    h3          { background: #ffb; text-color: #000; margin-left: -10px; }
+    h4          { background: #ffb; text-color: #000; }
+    code        { font-size:    1.1em;  background:  #ddf; text-color: #000; }
+    pre         { margin-left:  2em;    background:  #ddf; text-color: #000; }
+    pre code    { font-size:    1.1em;  background:  #ddf; text-color: #000; }
+</style></head>
 
 <p style="text-align:center">
     <a href="master-toc.html">master TOC</a>
 |
-    <a href="master-toc.html#admin">chapter TOC</a>
+    <a href="index.html">main page</a>
 |
-    <a href="support.html">support</a>
-|
-    <a href="license.html">license</a>
+    <a href="index.html#license">license</a>
 </p>
+<h1>gitolite administration</h1>
 
+<h2><a name="server"></a> server-side administration</h2>
 
-<h1>administering and running gitolite</h1>
+<p>The following activities require command line access to the server</p>
 
-<p><a name="admin_please_read_this_first_"></a></p>
+<ul>
+<li>changing anything in the <a href="rc.html">rc</a> file</li>
+<li>installing custom <a href="cust.html#hooks">hooks</a>, whether to all repos or just some repos</li>
+<li>moving <a href="rare.html#existing">existing</a> repos into gitolite control</li>
+</ul>
 
-<h2>please read this first</h2>
+<p>Please read the <a href="WARNINGS.html">WARNINGS</a> page first.</p>
 
-<p>Unless you know what you're doing, do not do <strong>anything</strong> manually on the
-server (except when the documentation says you should, for example to add
-custom hooks).  In particular, adding new repositories or users or changing
-the access control rules should not be done directly on the server.  Things
-will break.  For example, if you manually create a repo on the server, it will
-not have the required "update" hook, without which there is no access control
-for pushes.</p>
+<h2><a name="conf"></a> access control (the gitolite.conf file)</h2>
 
-<p>Most normal (day-to-day) gitolite admin work is done by cloning the
-gitolite-admin repo from the server to your workstation, making changes to the
-clone, and pushing those changes back.</p>
+<p>Most of gitolite's power is in the conf/gitolite.conf file, which specifies
+detailed access control for repos.</p>
 
-<p>The installation steps in the previous section include the steps to do this
-clone, so you should already have one on your workstation, in
-<code>~/gitolite-admin</code>.  You can of course clone it anywhere else you want and use
-that clone.</p>
+<h3><a name="confex"></a> example of a conf file</h3>
 
-<p>Either way, make sure you <code>cd</code> into this clone first.</p>
+<p>Here is an example of a simple conf/gitolite.conf file.</p>
 
-<p><em>Note</em>: some of the paths in this document use variable names.  Just refer to
-<code>~/.gitolite.rc</code> for the correct values for <em>your</em> installation.</p>
+<pre><code>    @staff              =   dilbert alice           # line 1
+    @projects           =   foo bar                 # line 2
 
-<p>Once you've cloned it, you're ready to add users and repos.</p>
+    repo @projects baz                              # line 3
+        RW+             =   @staff                  # line 4
+        -       master  =   ashok                   # line 5
+        RW              =   ashok                   # line 6
+        R               =   wally                   # line 7
 
-<h2>adding users and repos: <a href="add.html" title="adding users and repos">Link</a></h2>
+        config hooks.emailprefix = '[%GL_REPO] '    # line 8
+</code></pre>
 
+<p>Use the following links to learn more:</p>
 
-<h2>using hooks: <a href="hooks.html" title="using hooks">Link</a></h2>
-
-
-<p><a name="admin_other_features_"></a></p>
-
-<h2>other features</h2>
-
-<h3>moving pre-existing repos into gitolite: <a href="moverepos.html" title="moving pre-existing repos into gitolite">Link</a></h3>
-
-
-<h3>moving the whole thing from one server to another: <a href="moveserver.html" title="moving the whole thing from one server to another">Link</a></h3>
-
-
-<p><a name="admin_custom_git_config_"></a></p>
-
-<h3>custom git config</h3>
-
-<p>The custom hooks feature is a blunt instrument -- all repos get the hook you
-specified and will run it.  You can of course install hooks manually on the
-server, but sometimes that's cumbersome.</p>
-
-<p>Instead, you could set your hooks to only work if a certain "gitconfig"
-variable was set.  See <a href="confother_.html#rsgc" title="repo specific `git config` commands">this</a> for a way to specify "git config"
-settings on a per repository basis.</p>
+<ul>
+<li>the basic <a href="syntax.html">syntax</a> -- comments, whitespace, include files, etc.</li>
+<li>defining <a href="groups.html">groups</a>, as in lines 1 and 2</li>
+<li>adding and removing <a href="users.html">users</a></li>
+<li>adding and removing <a href="repos.html">repos</a>, as in line 3</li>
+<li>defining access <a href="rules.html">rules</a>, as in lines 4, 5, 6, and 7</li>
+<li>gitolite <a href="options.html">options</a></li>
+<li><a href="git-config.html">git config</a> keys and values, as in line 8</li>
+<li><a href="wild.html">"wild"</a> repos -- ad hoc, user-created, repos</li>
+</ul>
