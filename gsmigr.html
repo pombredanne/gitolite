@@ -64,9 +64,9 @@ gitolite; see the <a href="install.html">install document</a>.</p>
 instructions are to be read as "on gitolite admin's workstation".</p>
 
 <ul>
-<li><p><strong>clone</strong> the new gitolite-admin repo to your workstation.  (You already
+<li><p><strong>Clone</strong> the new gitolite-admin repo to your workstation.  (You already
 have a clone of the gitosis-admin repo so now you have both).</p></li>
-<li><p><strong>convert</strong> your gitosis config file and append it to your gitolite config
+<li><p><strong>Convert</strong> your gitosis config file and append it to your gitolite config
 file.  Substitute the path for your gitosis-admin clone in <code>$GSAC</code> below,
 and similarly the path for your gito<strong>lite</strong>-admin clone in <code>$GLAC</code>.  (The
 convert-gitosis-conf program is a standalone program that you can bring
@@ -81,7 +81,7 @@ it's "I only need it once" nature, this program has not received too much
 attention from anyone!</p></li>
 <li><p>Remove the entry for the 'gitosis-admin' repo.  You do not need it here
 and it may cause confusion.</p></li>
-<li><p><strong>copy</strong> the keys from gitosis's keydir (same meanings for GSAC and GLAC)</p>
+<li><p><strong>Copy</strong> the keys from gitosis's keydir (same meanings for GSAC and GLAC)</p>
 
 <pre><code>cp $GSAC/keydir/* $GLAC/keydir
 </code></pre>
@@ -139,5 +139,5 @@ original to "sitaram.pub.done" so gitolite won't pick it up.</p>
 <p>At this point you can rename the split parts more appropriately, like
 "sitaram@laptop.pub" and "sitaram@desktop.pub" or whatever.  <em>Please check
 the files to make sure this worked properly</em></p></li>
-<li><p>Check all your changes to your gitolite-admin clone, commit, and push</p></li>
+<li><p>Check all your changes to your gitolite-admin clone, commit, and push.</p></li>
 </ul>

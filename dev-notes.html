@@ -50,13 +50,13 @@ more info.</p>
 
 <ul>
 <li><p><code>gitolite access</code> to check access rights given repo, user, type of access
-(R, W, ...) and refname (optional).  Example use: src/commands/desc</p></li>
+(R, W, ...) and refname (optional).  Example use: src/commands/desc.</p></li>
 <li><p><code>gitolite creator</code> to get/check the creator of a repo.  Example use:
-src/commands/desc</p></li>
+src/commands/desc.</p></li>
 <li><p><code>gitolite git-config</code> to check gitolite options or git config variables
 directly from gitolite's "compiled" output, (i.e., without looking at the
 actual <code>repo.git/config</code> file or using the <code>git config</code> command).  Example
-use: none yet</p></li>
+use: none yet.</p></li>
 <li><p><code>gitolite query-rc</code> to check the value of an RC variable.  Example use:
 src/commands/desc.</p></li>
 </ul>
@@ -85,9 +85,9 @@ hook.  Just add it to <code>$HOME/.gitolite/hooks/common</code> and run <code>gi
 <p>If you want to add additional <code>update</code> hook functionality, do this:</p>
 
 <ul>
-<li><p>write and test your update hook separately from gitolite</p></li>
-<li><p>now add the code to src/VREF.  Let's say it is called "foo".</p></li>
-<li><p>to call your new update hook to all accesses for all repos, add this to
+<li><p>Write and test your update hook separately from gitolite.</p></li>
+<li><p>Now add the code to src/VREF.  Let's say it is called "foo".</p></li>
+<li><p>To call your new update hook to all accesses for all repos, add this to
 the end of your conf file:</p>
 
 <pre><code>repo @all

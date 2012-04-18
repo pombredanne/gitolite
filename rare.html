@@ -24,23 +24,23 @@
 <p>On the server:</p>
 
 <ul>
-<li><p>move the repos to <code>$HOME/repositories</code>.</p></li>
-<li><p>make sure that:</p>
+<li><p>Move the repos to <code>$HOME/repositories</code>.</p></li>
+<li><p>Make sure that:</p>
 
 <ul>
-<li>they are all <em>bare</em> repos</li>
-<li>all the repo names end in ".git"</li>
-<li>all the files and directories are owned and writable by the gitolite
-hosting user (especially true if you copied them as root)</li>
+<li>They are all <em>bare</em> repos.</li>
+<li>All the repo names end in ".git".</li>
+<li>All the files and directories are owned and writable by the gitolite
+hosting user (especially true if you copied them as root).</li>
 </ul></li>
-<li><p>run <code>gitolite setup</code>.  <strong>If you forget this step, you can also forget
+<li><p>Run <code>gitolite setup</code>.  <strong>If you forget this step, you can also forget
 about write access control!</strong></p></li>
 </ul>
 
 <p>Back on your workstation:</p>
 
 <ul>
-<li><p><a href="repos.html">add them</a> to conf/gitolite.conf in your clone of the admin repo,
+<li><p><a href="repos.html">Add them</a> to conf/gitolite.conf in your clone of the admin repo,
 then commit and push the change.</p>
 
 <p>If the repos are already covered by some <a href="wild.html">wild</a> pattern, this is
@@ -63,10 +63,10 @@ for the old server.</p></li>
 <li><p>Copy the <a href="rc.html">rc</a> file from the old server, overwriting this one.</p></li>
 <li><p><a href="special.html#writable">Disable</a> the old server so people won't push to it.</p></li>
 <li><p>Copy all the repos over from the old server, including gitolite-admin.
-Make sure the files end up with right ownership and permissions; if not,
-chown/chmod them.</p></li>
+Make sure the files end up with the right ownership and permissions; if
+not, chown/chmod them.</p></li>
+<li><p>Run <code>gitolite setup</code>.</p></li>
 <li><p>On a clone of the old gitolite-admin, add a new remote (or change an
 existing one) to point to the new server.  Then <code>git push -f</code> to this
 remote.</p></li>
-<li><p>On the server, run <code>gitolite setup</code>.</p></li>
 </ol>

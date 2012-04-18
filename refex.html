@@ -25,12 +25,12 @@
 <p>In addition:</p>
 
 <ul>
-<li><p>if no refex is supplied, it defaults to <code>refs/.*</code>, for example in a rule
+<li><p>If no refex is supplied, it defaults to <code>refs/.*</code>, for example in a rule
 like this:</p>
 
 <pre><code>RW              =   alice
 </code></pre></li>
-<li><p>a refex not starting with <code>refs/</code> is assumed to start with <code>refs/heads/</code>.
+<li><p>A refex not starting with <code>refs/</code> is assumed to start with <code>refs/heads/</code>.
 This means normal branches can be conveniently written like this:</p>
 
 <pre><code>RW  master      =   alice
@@ -41,7 +41,7 @@ This means normal branches can be conveniently written like this:</p>
 
 <pre><code>RW  refs/tags/v[0-9]    =   bob
 </code></pre></li>
-<li><p>a refex is implicitly anchored at the start, but not at the end.  In
+<li><p>A refex is implicitly anchored at the start, but not at the end.  In
 regular expression lingo, a <code>^</code> is assumed at the start (but no <code>$</code> at the
 end is assumed).  So a refex of <code>master</code> will match all these:</p>
 

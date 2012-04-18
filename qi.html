@@ -24,7 +24,7 @@
 <p>On the server:</p>
 
 <pre><code># get the software
-git clone -b g3 git://github.com/sitaramc/gitolite
+git clone git://github.com/sitaramc/gitolite
 
 # install it
 gitolite/install -ln
@@ -42,20 +42,20 @@ git clone git@host:gitolite-admin.git
 <h2>ASSUMPTIONS</h2>
 
 <ul>
-<li><p>this is a fresh install, not a migration from the old gitolite (v1.x,
+<li><p>This is a fresh install, not a migration from the old gitolite (v1.x,
 v2.x).</p></li>
-<li><p>on the server, your <code>$PATH</code> contains <code>$HOME/bin</code>.  If you don't like that,
+<li><p>On the server, your <code>$PATH</code> contains <code>$HOME/bin</code>.  If you don't like that,
 there are <a href="install.html">other install methods</a>.</p></li>
 <li><p>"your-name.pub" is your public key from your workstation.</p>
 
 <ul>
-<li>also, this key does not already have shell access to this gitolite
-hosting user</li>
+<li>Also, this key does not already have shell access to this gitolite
+hosting user.</li>
 </ul></li>
-<li><p>the setup command does not generate any warnings.</p>
+<li><p>The setup command does not generate any warnings.</p>
 
 <ul>
-<li>if it does, please see <a href="emergencies.html#ce">common errors</a> and fix things before
+<li>If it does, please see <a href="emergencies.html#ce">common errors</a> and fix things before
 continuing, or read the more complete <a href="setup.html">setup</a> page.</li>
 </ul></li>
 </ul>

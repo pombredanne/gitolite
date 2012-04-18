@@ -59,23 +59,24 @@ repo gitolite-admin
 
 <p>Subconf is exactly like the include command in syntax:</p>
 
-<pre><code>subconf "foo/bar.conf"
+<pre><code>subconf "foo.conf"
 </code></pre>
 
-<p>but while reading the included file, it sets a "subconf name" of "foo".</p>
+<p>but while reading the included file (as well as anything included from it),
+gitolite sets the "subconf name" to "foo".</p>
 
-<p>When a subconf name is in effect, there are some restrictions on what repos
-can be managed.</p>
+<p>A "subconf" imposes some restrictions on what repos can be managed.</p>
 
-<p>For example, in the include file in the above example, you can only have
-"repo" lines for:</p>
+<p>For example, while the subconf name is "foo", as in the above example,
+gitolite will only process "repo" lines for:</p>
 
 <ul>
-<li>a repo called "foo"</li>
-<li>a group called "@foo" defined outside the include file</li>
-<li>a member of a group called "@foo" (again, defined outside)</li>
-<li>a repo that matches a member of a group called "@foo" if that member is a
-regular expression pattern</li>
+<li>A repo called "foo".</li>
+<li>A group called "@foo", as long as the group is defined in the main conf
+file (i.e., <em>outside</em> "foo.conf").</li>
+<li>A member of a group called "@foo" (again, defined outside).</li>
+<li>A repo that matches a member of a group called "@foo" if that member is a
+regular expression pattern.</li>
 </ul>
 
 <p>Here's an example.  If the main conf file contains</p>
@@ -85,6 +86,9 @@ regular expression pattern</li>
 
 <p>then the subconf can only accept repo statements that refer to 'foo', '@foo',
 'aa', 'bb', or any repo whose name starts with 'cc/'.</p>
+
+<p><strong>Note</strong>: the subconf name "master" is special; it is the default subconf in
+effect for the main conf file and has no restrictions.</p>
 
 <h3>how the "subconf name" is derived</h3>
 

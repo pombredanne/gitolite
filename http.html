@@ -30,38 +30,18 @@ that is the same or even relevant -- that is from 2006 and is quite different
 <ul>
 <li><p>Please read <a href="auth.html">authentication versus authorisation</a> first, and make
 sure you understand what is gitolite's responsibility and what isn't.</p></li>
-<li><p>The 'gitolite' command (for example, 'gitolite compile', 'gitolite
-query-rc', and so on) <em>can</em> be run on the server, but it's not
-straightforward.  Assuming you installed using the exact same values as in
-this document:</p>
-
-<ul>
-<li>get a shell by using, say, <code>su -s /bin/bash - apache</code></li>
-<li>run <code>export HOME=$HOME/gitolite-home</code></li>
-<li>run <code>export PATH=$PATH:$HOME/bin</code></li>
-</ul>
-
-<p><p>Now you can run <code>gitolite &lt;subcommand&gt;</code></p></li>
-<li><p>I have tested only on stock Fedora 16; YDMV</p></li>
+<li><p>I have tested this only on stock Fedora 16; YDMV.</p></li>
 <li><p>As before, I have not tried making repos available to both ssh <em>and</em> http
 mode clients but it ought to work.  If you managed it, I'd appreciate a
 doc patch describing how you did it.</p></li>
-</ul></p>
-
-<h2>additional requirements</h2>
-
-<ul>
-<li>requires <code>GIT_PROJECT_ROOT</code> (see "man git-http-backend" for what this is)
-set explicitly (i.e., it is no longer optional).  Please set it to some
-place outside apache's <code>DOCUMENT_ROOT</code>.</li>
 </ul>
 
 <h2>assumptions:</h2>
 
 <ul>
-<li>apache 2.x and git installed.</li>
-<li>httpd runs under the "apache" userid; adjust instructions below if not.</li>
-<li>similarly for "/var/www" and other file names/locations.</li>
+<li>Apache 2.x and git installed.</li>
+<li>Httpd runs under the "apache" userid; adjust instructions below if not.</li>
+<li>Similarly for "/var/www" and other file names/locations.</li>
 </ul>
 
 <h2>instructions</h2>
@@ -75,7 +55,13 @@ install gitolite in smart http mode.</p>
 <p>Make a copy of the script, go through it carefully, (possibly removing lines
 that delete files etc.), change values per your system, and only then run it.</p>
 
+<p><font color="gray">Note that the <code>GIT_PROJECT_ROOT</code> variable (see "man
+git-http-backend") is no longer optional.  Make sure you set it to some place
+outside apache's <code>DOCUMENT_ROOT</code>.</font></p>
+
 <h2>usage</h2>
+
+<h3>client side</h3>
 
 <p>Git URLs look like <code>http://user:password@server/git/reponame.git</code>.</p>
 
@@ -93,3 +79,17 @@ curl http://user:password@server/git/info?repopatt+user1+user2
 
 <p>With a few nice shell aliases, you won't even notice the horrible convolutions
 here ;-)  See t/smart-http for a couple of useful ones.</p>
+
+<h3>server side</h3>
+
+<p>The 'gitolite' command (for example, 'gitolite compile', 'gitolite query-rc',
+and so on) <em>can</em> be run on the server, but it's not straightforward.  Assuming
+you installed exactly as given in this document, you should</p>
+
+<ul>
+<li>get a shell by using, say, <code>su -s /bin/bash - apache</code></li>
+<li>run <code>export HOME=$HOME/gitolite-home</code></li>
+<li>run <code>export PATH=$PATH:$HOME/bin</code></li>
+</ul>
+
+<p>and <em>then</em> you can run <code>gitolite &lt;subcommand&gt;</code></p>

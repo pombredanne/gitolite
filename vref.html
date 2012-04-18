@@ -104,13 +104,13 @@ exit.</p>
 <h2>how it works -- details</h2>
 
 <ul>
-<li><p>the VREF code is only called if there are any VREF rules for the user,
+<li><p>The VREF code is only called if there are any VREF rules for the user,
 which means when the lead developer pushes, the VREF is not called at all.</p>
 
 <p>Side note: this is enormously more efficient than adding additional
 <code>update</code> hooks, which will get executed whether they are needed or not,
 for every repo and every user!</p></li>
-<li><p>when dev2 or dev3 push, gitolite first checks the real ref
+<li><p>When dev2 or dev3 push, gitolite first checks the real ref
 (<code>ref/heads/master</code> or whatever).  After this it looks at VREF rules, and
 calls an external program for every one it finds.  Specifically, in a line
 like</p>
@@ -123,7 +123,7 @@ like</p>
 
 <p>The program is passed <strong>nine arguments</strong> in this case (see next section
 for details).</p></li>
-<li><p>the script can print anything it wants to STDOUT; the first word in each
+<li><p>The script can print anything it wants to STDOUT; the first word in each
 such line will be treated as a virtual ref to be matched against all the
 rules, while the rest, if any, is a message to be added to the standard
 "...DENIED..." message that gitolite prints if that refex matches.</p>
@@ -131,24 +131,24 @@ rules, while the rest, if any, is a message to be added to the standard
 <p>Usually it only makes sense to either</p>
 
 <ul>
-<li>print nothing -- if you don't want the rule that triggered it to match
+<li>Print nothing -- if you don't want the rule that triggered it to match
 (ie., whatever condition being tested was not violated; like if the
-count of changed files did not exceed 9, in our earlier example)</li>
-<li>print the refex itself (plus an optional message), so that it matches
-the line which invoked it</li>
+count of changed files did not exceed 9, in our earlier example).</li>
+<li>Print the refex itself (plus an optional message), so that it matches
+the line which invoked it.</li>
 </ul></li>
 </ul>
 
 <h3>arguments passed to the vref code</h3>
 
 <ul>
-<li><p>arguments <strong>1, 2, 3</strong>: the 'ref', 'oldsha', and 'newsha' that git passed
-to the update hook (see 'man githooks')</p>
+<li><p>Arguments <strong>1, 2, 3</strong>: the 'ref', 'oldsha', and 'newsha' that git passed
+to the update hook (see 'man githooks').</p>
 
 <p>This, combined with the fact that non-zero exits are detected, mean that
 you can simply use an existing update.secondary as a new VREF as-is, no
 changes needed.</p></li>
-<li><p>arguments <strong>4 and 5</strong>: the 'oldtree' and 'newtree' SHAs.  These are the
+<li><p>Arguments <strong>4 and 5</strong>: the 'oldtree' and 'newtree' SHAs.  These are the
 same as the oldsha and newsha values, except if one of them is all-0.
 (indicating a ref creation or deletion).  In that case the corresponding
 'tree' SHA is set (by gitolite, as a courtesy) to the special SHA
@@ -157,13 +157,13 @@ tree.</p>
 
 <p>(None of these shenanigans would have been needed if <code>git diff $oldsha
 $newsha</code> would not error out when passed an all-0 SHA.)</p></li>
-<li><p>argument <strong>6</strong>: the attempted access flag.  Typically <code>W</code> or <code>+</code>, but
+<li><p>Argument <strong>6</strong>: the attempted access flag.  Typically <code>W</code> or <code>+</code>, but
 could also be <code>C</code>, <code>D</code>, or any of these 4 followed by <code>M</code>.  If you have to
 ask what they mean, you haven't read enough gitolite documentation to be
 able to make virtual refs work.</p></li>
-<li><p>argument <strong>7</strong>: is the entire refex; in our example
+<li><p>Argument <strong>7</strong>: is the entire refex; in our example
 <code>VREF/COUNT/3/NEWFILES</code>.</p></li>
-<li><p>arguments <strong>8 onward</strong>: are the split out (by <code>/</code>) portions of the refex,
+<li><p>Arguments <strong>8 onward</strong>: are the split out (by <code>/</code>) portions of the refex,
 excluding the first two components.  In our example they would be <code>3</code>
 followed by <code>NEWFILES</code>.</p></li>
 </ul>
@@ -319,14 +319,14 @@ quite different.</p>
 <p>Here are some more ideas:</p>
 
 <ul>
-<li>number of commits (<code>git rev-list --count $old $new</code>)</li>
-<li>number of binary files in commit (currently I only know to count
-occurrences of <code>Bin</code> in the output of <code>git diff --stat</code></li>
-<li>number of <em>new</em> binary files (count <code>Bin 0 -&gt;</code> in <code>git diff --stat</code>
-output)</li>
-<li>time of day/day of week (see example snippet somewhere above)</li>
-<li>IP address</li>
-<li>phase of the moon</li>
+<li>Number of commits (<code>git rev-list --count $old $new</code>).</li>
+<li>Number of binary files in commit (currently I only know to count
+occurrences of <code>Bin</code> in the output of <code>git diff --stat</code>.</li>
+<li>Number of <em>new</em> binary files (count <code>Bin 0 -&gt;</code> in <code>git diff --stat</code>
+output).</li>
+<li>Time of day/day of week (see example snippet somewhere above).</li>
+<li>IP address.</li>
+<li>Phase of the moon.</li>
 </ul>
 
 <p>Note that pretty much anything that involves <code>$oldsha..$newsha</code> will have to

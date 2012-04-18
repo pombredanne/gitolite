@@ -82,21 +82,21 @@ example will pass the pre-git check.</p>
 <p>For the <strong>update check</strong>, git gives us all the information we need.  Then:</p>
 
 <ul>
-<li><p>all the rules for a repo are <a href="rules.html#rule-accum">accumulated</a></p></li>
-<li><p>the rules pertaining to this repo <em>and</em> this user (or to a group to which
-they belong, respectively) are kept; the rest are ignored</p></li>
-<li><p>these rules are examined <em>in the sequence they appeared in the conf file</em>.
+<li><p>All the rules for a repo are <a href="rules.html#rule-accum">accumulated</a>.</p></li>
+<li><p>The rules pertaining to this repo <em>and</em> this user (or to a group to which
+they belong, respectively) are kept; the rest are ignored.</p></li>
+<li><p>These rules are examined <em>in the sequence they appeared in the conf file</em>.
 For each rule:</p>
 
 <ul>
-<li>if the ref does not match the <a href="refex.html">refex</a>, the rule is skipped</li>
-<li>if it's a deny rule (the permissions field is a <code>-</code>), access is
-<strong>rejected</strong> and the matching stops</li>
-<li>if the permission field matches the specific <a href="write-types.html">type of
+<li>If the ref does not match the <a href="refex.html">refex</a>, the rule is skipped.</li>
+<li>If it's a deny rule (the permissions field is a <code>-</code>), access is
+<strong>rejected</strong> and the matching stops.</li>
+<li>If the permission field matches the specific <a href="write-types.html">type of
 write</a> operation, access is <strong>allowed</strong> and the matching
-stops</li>
+stops.</li>
 </ul></li>
-<li><p>if no rule ends with a decision, ("fallthru"), access is <strong>rejected</strong>.</p></li>
+<li><p>If no rule ends with a decision, ("fallthru"), access is <strong>rejected</strong>.</p></li>
 </ul>
 
 <p>Now you need to understand how <a href="refex.html">refex</a> matching happens and how the
@@ -105,13 +105,13 @@ permissions match the various <a href="write-types.html">types of write operatio
 <p>Using these, you can see, in our example, that:</p>
 
 <ul>
-<li>everyone, even wally, can read the repo.</li>
-<li>dilbert can push, rewind, or delete any ref.</li>
-<li>alice can push, rewind, or delete any ref whose name starts with 'dev';
+<li>Everyone, even wally, can read the repo.</li>
+<li>Dilbert can push, rewind, or delete any ref.</li>
+<li>Alice can push, rewind, or delete any ref whose name starts with 'dev';
 see <a href="refex.html">refex</a> for details.</li>
-<li>alice can also push (but not rewind or delete) any ref whose name starts
+<li>Alice can also push (but not rewind or delete) any ref whose name starts
 with 'temp/'.  This applies to bob also.</li>
-<li>if it weren't for line 3, the previous statement would apply to wally
+<li>If it weren't for line 3, the previous statement would apply to wally
 also.</li>
 </ul>
 
@@ -120,7 +120,7 @@ deny rules for pre-git, but having got past it, he can't actually do anything.
 That's by design, and as I said if you don't like it you can ask gitolite to
 <a href="rules.html#deny-rules">deny at pre-git</a>.</p>
 
-<h3><a name="perms"></a> summary of permissions</h3>
+<h3><a name="permsum"></a> summary of permissions</h3>
 
 <p>The full set of permissions, in regex syntax: <code>-|R|RW+?C?D?M?</code>.  This expands
 to one of <code>-</code>, <code>R</code>, <code>RW</code>, <code>RW+</code>, <code>RWC</code>, <code>RW+C</code>, <code>RWD</code>, <code>RW+D</code>, <code>RWCD</code>, or

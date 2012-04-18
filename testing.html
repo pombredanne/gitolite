@@ -26,9 +26,11 @@ so be sure to use a throwaway userid</strong>.</font></p>
 
 <pre><code>git clone git://github.com/sitaramc/gitolite
 cd gitolite
-git checkout -f g3
 prove
 </code></pre>
+
+<p>(Make sure sshd allows incoming ssh to this userid at least from localhost.
+Out of scope for this document: sshd config, 'AllowUsers', etc...)</p>
 
 <p>Gitolite's test suite is mostly written using <a href="http://github.com/sitaramc/tsh">tsh</a> -- the "testing shell".
 Take a look at some of the scripts and you will see what it looks like.  It
@@ -41,3 +43,24 @@ would otherwise take.</p>
 
 <p>If you think that defeats the purpose of the testing, you haven't read
 <a href="auth.html">this</a> yet.</p>
+
+<h2><a name="trying"></a> trying out gitolite</h2>
+
+<p>It's easy to take gitolite for a trial run, in ssh mode, and play with all of
+its features (except mirroring).</p>
+
+<p>Create a <strong>throw-away userid</strong>, log in to it, then do what the "testing
+gitolite" section above says, except instead of running <code>prove</code>, you run
+<code>prove t/ssh*</code>.</p>
+
+<p>When this is done, you get a gitolite installation with 7 gitolite users
+("admin", and "u1" through "u6").</p>
+
+<p>Don't forget that the client and the server are all on the same user on the
+same machine; we're <em>simulating</em> 7 gitolite users using ssh keys!  (How?
+Maybe <code>~/.ssh/config</code> will give you a hint).</p>
+
+<p>URLs look like <code>user:repo</code>, so for example you can clone the admin repo by
+<code>git clone admin:gitolite-admin</code>.  Remote commands look like <code>ssh u1 info</code>.</p>
+
+<p>So start by cloning the admin repo, and try out whatever you want!</p>

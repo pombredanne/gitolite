@@ -26,9 +26,9 @@ fine-grained access control and many more powerful features.</p>
 
 <p><font color="gray"></p>
 
-<h2><a name="g2"></a> (for current gitolite (v2) users)</h2>
+<h2><a name="g2"></a> (for older gitolite (v1.x and v2.x) users)</h2>
 
-<p>For current gitolite (call it "g2" for convenience) users,</p>
+<p>For users of gitolite v2.x (call it "g2" for convenience),</p>
 
 <ul>
 <li><a href="g3why.html">Why</a> I rewrote gitolite.</li>
@@ -41,6 +41,7 @@ fine-grained access control and many more powerful features.</p>
 <h2><a name="ql"></a> quick links</h2>
 
 <ul>
+<li><a href="testing.html#trying">Trying</a> out gitolite.</li>
 <li>Minimum <a href="install.html#req">requirements</a>.</li>
 <li>Here's how to do a <a href="qi.html">quick install, setup, and clone</a>.</li>
 <li>Don't know ssh well enough?  <a href="ssh.html">Learn</a>.  It's <strong>IMPORTANT</strong>.</li>
@@ -62,14 +63,14 @@ most people see:</p>
 <li>Use a single unix user ("real" user) on the server.</li>
 <li>Provide access to many gitolite users:
 <ul>
-<li>they are not "real" users</li>
-<li>they do not get shell access</li>
+<li>they are not "real" users,</li>
+<li>they do not get shell access.</li>
 </ul></li>
 <li>Control access to many git repositories:
 <ul>
-<li>read access controlled at the repo level</li>
+<li>read access controlled at the repo level,</li>
 <li>write access controlled at the branch/tag/file/directory level,
-including who can rewind, create, and delete branches/tags</li>
+including who can rewind, create, and delete branches/tags.</li>
 </ul></li>
 <li>Can be installed without root access, assuming git and perl are already
 installed.</li>

@@ -66,22 +66,22 @@ problem, really.</p></li>
 the answer, but here's a list of files you should blow away.</p>
 
 <ul>
-<li><p><strong>gitolite sources</strong> -- can be found by running <code>which gitolite</code>.  If it's
+<li><p><strong>Gitolite sources</strong> -- can be found by running <code>which gitolite</code>.  If it's
 a symlink, go to its target directory.</p></li>
-<li><p><strong>gitolite admin directory</strong> -- <code>$HOME/.gitolite</code>.  Save the 'logs'
+<li><p><strong>Gitolite admin directory</strong> -- <code>$HOME/.gitolite</code>.  Save the 'logs'
 directory if you want to preserve them for any reason.</p></li>
-<li><p><strong>the rc file</strong> -- <code>$HOME/.gitolite.rc</code>.  If you made any changes to it
+<li><p><strong>The rc file</strong> -- <code>$HOME/.gitolite.rc</code>.  If you made any changes to it
 you can save it as some other name instead of deleting it.</p></li>
-<li><p><strong>the gitolite-admin repo</strong> -- <code>$HOME/repositories/gitolite-admin.git</code>.
+<li><p><strong>The gitolite-admin repo</strong> -- <code>$HOME/repositories/gitolite-admin.git</code>.
 You can clone it somewhere to save it before blowing it away if you wish.</p></li>
-<li><p><strong>git repositories</strong> -- <code>$HOME/repositories</code>.  The install process will
+<li><p><strong>Git repositories</strong> -- <code>$HOME/repositories</code>.  The install process will
 not touch any existing repos except 'gitolite-admin.git', so you do not
 have to blow away (or move) your work repos to fix a botched install.</p>
 
 <p>Only when you update the conf to include those repos and push the changes
 will those repos be touched.  And even then all that happens is that the
 update hook, if any, is replaced with gitolite's own hook.</p></li>
-<li><p><strong>ssh stuff</strong> -- exercise caution when doing this, but in general it
+<li><p><strong>Ssh stuff</strong> -- exercise caution when doing this, but in general it
 should be safe to delete all lines between the "gitolite start" and
 "gitolite end" markers in <code>$HOME/.ssh/authorized_keys</code>.</p>
 
@@ -121,12 +121,12 @@ don't need gitolite!</p></li>
 <ul>
 <li><p><code>WARNING: split conf not set, gl-conf present for &lt;repo&gt;</code></p>
 
-<p>(case 1) This can happen if you have a <em>bare</em> repo (i.e., some <code>repo.git</code>
+<p>(Case 1) This can happen if you have a <em>bare</em> repo (i.e., some <code>repo.git</code>
 directory) copied from g2 with <code>GL_BIG_CONFIG</code> on, and you pushed a change
 to the conf or ran certain commands <em>before</em> adding the newly added repo
 to the conf file.</p>
 
-<p>(case 2) This can also happen if you changed something like this</p>
+<p>(Case 2) This can also happen if you changed something like this</p>
 
 <pre><code>repo foo
     ...&lt;some rules&gt;...
@@ -163,7 +163,7 @@ list -- see <a href="index.html#contact">contact</a> -- might be able to; they c
 lot more patience than I do, bless 'em!)</p>
 
 <ul>
-<li><p><strong>client side software</strong></p>
+<li><p><strong>Client side software</strong></p>
 
 <ul>
 <li>putty/plink</li>
@@ -174,7 +174,7 @@ lot more patience than I do, bless 'em!)</p>
 <li>...probably some more I forgot; will update this list as I remember...</li>
 <li>did I mention putty/plink?</li>
 </ul></li>
-<li><p><strong>ssh</strong></p>
+<li><p><strong>Ssh</strong></p>
 
 <p>The <em>superstar</em> of the "not a gitolite problem" category is actually ssh.</p>
 
@@ -184,7 +184,7 @@ help you anyway!</p>
 
 <p>Everything I know is in that latter link.  Please email me about ssh ONLY
 if you find something wrong or missing in those documents.</p></li>
-<li><p><strong>git</strong></p>
+<li><p><strong>Git</strong></p>
 
 <p>I wish I had a dollar for each time someone did a <em>first push</em> on a new
 repo, got an error because there were "no refs in common (etc.)", and

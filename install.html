@@ -63,11 +63,12 @@ familiarity is not necessary to do <em>basic</em> access control.</p></li>
 <h3>server</h3>
 
 <ul>
-<li>any Unix system with a posix compatible "sh".</li>
-<li>git version 1.6.6 or later</li>
-<li>perl 5.8.8 or later</li>
-<li>openssh (almost any version).  Optional if you're using <a href="http.html">smart http</a></li>
-<li>a dedicated Unix userid to be the hosting user, usually "git" but it can
+<li>Any Unix system with a posix compatible "sh".</li>
+<li>Git version 1.6.6 or later.</li>
+<li>Perl 5.8.8 or later.</li>
+<li>Openssh (almost any version).  Optional if you're using <a href="http.html">smart
+http</a>.</li>
+<li>A dedicated Unix userid to be the hosting user, usually "git" but it can
 be any user, even your own normal one.  (If you're using an RPM/DEB the
 install probably created one called "gitolite").</li>
 </ul>
@@ -78,19 +79,15 @@ side.</p>
 <h3>client</h3>
 
 <ul>
-<li>openssh client</li>
-<li>git 1.6.6 or later.  Almost any git client will work, as long as it knows
+<li>Openssh client.</li>
+<li>Git 1.6.6 or later.  Almost any git client will work, as long as it knows
 how to use ssh keys and send the right one along.</li>
 </ul>
 
 <h2>getting the software</h2>
 
-<pre><code>git clone -b g3 git://github.com/sitaramc/gitolite
+<pre><code>git clone git://github.com/sitaramc/gitolite
 </code></pre>
-
-<p>The -b g3' is needed until g3 becomes "master".  Current estimates put this
-around June 2012, when the old gitolite (upto v2.x) will be retired and
-supported only for security issues.</p>
 
 <h2>the actual install</h2>
 
@@ -114,7 +111,7 @@ command.</li>
 <p>There is a program called 'install' that helps you do these easily.  Assuming
 your cloned the repo like this:</p>
 
-<pre><code>git clone -b g3 git://github.com/sitaramc/gitolite
+<pre><code>git clone git://github.com/sitaramc/gitolite
 </code></pre>
 
 <p>you can run the 'install' command in 3 different ways:</p>
@@ -201,36 +198,36 @@ will normally touch in normal repos is the <code>update</code> hook.</p>
 <li><p>Carefully wipe out the old gitolite</p>
 
 <ul>
-<li><p>the <strong>code</strong></p>
+<li><p>The <strong>code</strong></p>
 
 <ul>
-<li><p>delete or move away all the old gitolite scripts.  Check the path
+<li><p>Delete or move away all the old gitolite scripts.  Check the path
 to the gl-auth-command in <code>~/.ssh/authorized_keys</code> if you forgot
 where you put them.</p></li>
-<li><p>delete or move away the two directories named in the two variables
-<code>GL_PACKAGE_CONF</code> and <code>GL_PACKAGE_HOOKS</code> in <code>~/.gitolite.rc</code></p></li>
+<li><p>Delete or move away the two directories named in the two variables
+<code>GL_PACKAGE_CONF</code> and <code>GL_PACKAGE_HOOKS</code> in <code>~/.gitolite.rc</code>.</p></li>
 </ul></li>
-<li><p>the <strong>rc file</strong></p>
+<li><p>The <strong>rc file</strong></p>
 
 <ul>
-<li>rename <code>~/.gitolite.rc</code> to something else</li>
+<li>Rename <code>~/.gitolite.rc</code> to something else.</li>
 </ul></li>
-<li><p>the <strong>admin repo</strong></p>
+<li><p>The <strong>admin repo</strong></p>
 
 <ul>
 <li>clone <code>~/repositories/gitolite-admin.git</code> to someplace safe</li>
 <li>then delete <code>~/repositories/gitolite-admin.git</code></li>
 </ul>
 
-<p>(make sure you do not delete any other repos!)</p></li>
-<li><p>the <strong>admin directory</strong></p>
+<p>(Make sure you do not delete any other repos!)</p></li>
+<li><p>The <strong>admin directory</strong>.</p>
 
 <ul>
-<li><p>if you need to preserve logs, move the ~/.gitolite/logs` directory
-somewhere else</p></li>
-<li><p>if you added any custom hooks and wish to preserve them, move the
-~/.gitolite/hooks` directory somewhere else</p></li>
-<li><p>delete <code>~/.gitolite</code></p></li>
+<li><p>If you need to preserve logs, move the ~/.gitolite/logs` directory
+somewhere else.</p></li>
+<li><p>If you added any custom hooks and wish to preserve them, move the
+~/.gitolite/hooks` directory somewhere else.</p></li>
+<li><p>Delete <code>~/.gitolite</code>.</p></li>
 </ul></li>
 </ul></li>
 <li><p>Read about <a href="g2migr.html#rc-preset">presetting</a> the rc file; if you're using any

@@ -52,7 +52,7 @@ than authentication (i.e., ssh, in the common case).</p>
 <ul>
 <li><p>Your workstation is the <strong>client</strong>.  Your userid on the client does not
 matter, and it has no relation to your gitolite username.</p></li>
-<li><p>the server is called <strong>server</strong> and the "hosting user" is <strong>git</strong>.  If
+<li><p>The server is called <strong>server</strong> and the "hosting user" is <strong>git</strong>.  If
 this is an RPM/DEB install, the hosting user is probably called
 "gitolite", however we will use "git" in this document.</p></li>
 </ul>
@@ -60,16 +60,16 @@ this is an RPM/DEB install, the hosting user is probably called
 <h4>taking stock -- relevant files and directories</h4>
 
 <ul>
-<li><p>the client has a <code>~/.ssh</code> containing a few keypairs.  It may also have a
+<li><p>The client has a <code>~/.ssh</code> containing a few keypairs.  It may also have a
 <code>config</code> file.</p></li>
-<li><p>the client also has a clone of the "gitolite-admin" repo, which contains a
+<li><p>The client also has a clone of the "gitolite-admin" repo, which contains a
 bunch of <code>*.pub</code> files in <code>keydir</code>.  We assume this clone is in <code>$HOME</code>;
 if it is not, adjust instructions accordingly when needed.</p></li>
 <li><p>The git user on the server has a <code>~/.ssh/authorized_keys</code> file that the
 ssh daemon uses to authenticate incoming users.  We often call this file
 <strong>authkeys</strong> to save typing, and it always means the one on the server
 (we're not interested in this file on the client side).</p></li>
-<li><p>the server also has a <code>~/.gitolite/keydir</code> which contains a bunch of
+<li><p>The server also has a <code>~/.gitolite/keydir</code> which contains a bunch of
 <code>*.pub</code> files.</p></li>
 </ul>
 
@@ -78,21 +78,21 @@ ssh daemon uses to authenticate incoming users.  We often call this file
 <p>Here's how normal gitolite key handling works:</p>
 
 <ul>
-<li><p>(on client) pub key changes like adding new ones, deleting old ones, etc.,
+<li><p>(On client) pub key changes like adding new ones, deleting old ones, etc.,
 are done in the <code>keydir</code> directory in the gitolite-admin repo clone.  Then
 the admin <code>git add</code>s and <code>git commit</code>s those changes, then <code>git push</code>es
 them to the server.</p></li>
-<li><p>(on server) a successful push from the client makes git invoke the
+<li><p>(On server) a successful push from the client makes git invoke the
 post-update hook in the gitolite-admin repo.  This hook is installed by
 gitolite, and it does a bunch of things which are quite transparent to
 the admin, but we'll describe briefly here:</p>
 
 <ul>
-<li><p>the pubkey files from this push are checked-out into
+<li><p>The pubkey files from this push are checked-out into
 <code>~/.gitolite/keydir</code> (and similarly the config files into
-<code>~/.gitolite/conf</code>)</p></li>
-<li><p>the "compile" script then runs, which uses these files to populate
-<code>~/.ssh/authorized_keys</code> on the server</p>
+<code>~/.gitolite/conf</code>).</p></li>
+<li><p>The "compile" script then runs, which uses these files to populate
+<code>~/.ssh/authorized_keys</code> on the server.</p>
 
 <p>The authkeys file may have other, (non-gitolite) keys also.  Those
 lines are preserved.  Gitolite only touches lines that are found
@@ -114,7 +114,7 @@ you should start with <a href="sts.html#stsapp1">appendix 1</a>.  If that doesn'
 with the other appendices in sequence.</p>
 
 <ul>
-<li>running any git clone/fetch/ls-remote or just <code>ssh git@server info</code> asks
+<li>Running any git clone/fetch/ls-remote or just <code>ssh git@server info</code> asks
 you for a password.</li>
 </ul>
 
@@ -124,20 +124,20 @@ and continue with the rest in sequence.  <a href="sts.html#ybpfail">Appendix 5</
 background info.</p>
 
 <ul>
-<li><p>running <code>ssh git@server info</code> gets you the output of the GNU 'info'
+<li><p>Running <code>ssh git@server info</code> gets you the output of the GNU 'info'
 command instead of gitolite's version and access info.</p></li>
-<li><p>running <code>git clone git@server:repositories/reponame</code> (note presence of
+<li><p>Running <code>git clone git@server:repositories/reponame</code> (note presence of
 <code>repositories/</code> in URL) works.</p>
 
 <p>[A proper gitolite key will only let you <code>git clone git@server:reponame</code>
 (note absence of <code>repositories/</code>)]</p></li>
-<li><p>you are able to clone repositories but are unable to push changes back
+<li><p>You are able to clone repositories but are unable to push changes back
 (the error complains about the <code>GL_BINDIR</code> environment variable not being
 set, and the <code>hooks/update</code> failing in some way).</p>
 
 <p>[If you run <code>git remote -v</code> you will find that your clone URL included the
 <code>repositories/</code> described above!]</p></li>
-<li><p>conversely, using the correct syntax, <code>git clone git@server:reponame</code>
+<li><p>Conversely, using the correct syntax, <code>git clone git@server:reponame</code>
 (note absence of <code>repositories/</code> in the URL), gets you <code>fatal: 'reponame'
 does not appear to be a git repository</code>, and yet you are sure 'reponame'
 exists, you haven't mis-spelled it, etc.</p></li>
@@ -152,14 +152,14 @@ you there again.  Especially the first bullet.</p>
 <p>Done?  OK, now the general outline for ssh troubleshooting is this:</p>
 
 <ul>
-<li><p>make sure the server's overall setup even <em>allows</em> pubkey based login.
+<li><p>Make sure the server's overall setup even <em>allows</em> pubkey based login.
 I.e., check that git fetch/clone/ls-remote commands or a plain <code>ssh
 git@server info</code> do NOT ask for a password.  If you do get asked for a
 password, see <a href="sts.html#stsapp1">appendix 1</a>.</p></li>
-<li><p>match client-side pubkeys (<code>~/.ssh/*.pub</code>) with the server's authkeys
+<li><p>Match client-side pubkeys (<code>~/.ssh/*.pub</code>) with the server's authkeys
 file.  To do this, run <code>sshkeys-lint</code>, which tells you in detail what key
 has what access.  See <a href="sts.html#sshkeys-lint">appendix 2</a>.</p></li>
-<li><p>at this point, we know that we have the right key, and that if sshd
+<li><p>At this point, we know that we have the right key, and that if sshd
 receives that key, things will work.  But we're not done yet.  We still
 need to make sure that this specific key is being offered/sent by the
 client, instead of the default key.  See <a href="sts.html#stsapp3">appendix 3</a> and
@@ -197,10 +197,10 @@ to replicate it manually.  The input is your pubkey, typically
 <code>~/.ssh/id_rsa.pub</code> from your client/workstation.</p>
 
 <ul>
-<li><p>it copies it to the server as some file</p></li>
-<li><p>it appends that file to <code>~/.ssh/authorized_keys</code> on the server
-(creating it if it doesn't already exist)</p></li>
-<li><p>it then makes sure that all these files/directories have go-w perms
+<li><p>It copies it to the server as some file.</p></li>
+<li><p>It appends that file to <code>~/.ssh/authorized_keys</code> on the server
+(creating it if it doesn't already exist).</p></li>
+<li><p>It then makes sure that all these files/directories have go-w perms
 set (assuming user is "git"):</p>
 
 <pre><code>/home/git/.ssh/authorized_keys
@@ -262,7 +262,7 @@ try, you are being asked for a password.</p>
 <p>This is a quick checklist:</p>
 
 <ul>
-<li><p>make sure you're being asked for a password and not a pass<em>phrase</em>.  Do
+<li><p>Make sure you're being asked for a password and not a pass<em>phrase</em>.  Do
 not confuse or mistake a prompt saying <code>Enter passphrase for key
 '/home/sitaram/.ssh/id_rsa':</code> for a password prompt from the remote
 server!</p>
@@ -282,29 +282,29 @@ once everything is working, using <code>ssh-keygen -p</code></strong>.</p>
 <code>ssh-agent</code>) or something like that to manage your keys.  Other than
 discussing one more potential trouble-spot with ssh-agent (see below),
 further discussion of ssh-agent/keychain is out of scope of this document.</p></li>
-<li><p>ssh is very sensitive to permissions.  An extremely conservative setup is
+<li><p>Ssh is very sensitive to permissions.  An extremely conservative setup is
 given below, but be sure to do this on <strong>both the client and the server</strong>:</p>
 
 <pre><code>cd $HOME
 chmod go-rwx .
 chmod -R go-rwx .ssh
 </code></pre></li>
-<li><p>actually, every component of the path to <code>~/.ssh/authorized_keys</code> all the
+<li><p>Actually, every component of the path to <code>~/.ssh/authorized_keys</code> all the
 way upto the root directory must be at least <code>chmod go-w</code>.  So be sure to
 check <code>/</code> and <code>/home</code> also.</p></li>
-<li><p>while you're doing this, make sure the owner and group info for each of
+<li><p>While you're doing this, make sure the owner and group info for each of
 these components are correct.  <code>ls -ald ~ ~/.ssh ~/.ssh/authorized_keys</code>
 will tell you what they are.</p></li>
-<li><p>you may also want to check <code>/etc/ssh/sshd_config</code> to see if the "git" user
+<li><p>You may also want to check <code>/etc/ssh/sshd_config</code> to see if the "git" user
 is allowed to login at all.  For example, if that file contains an
 <code>AllowUsers</code> config entry, then only users mentioned in that line are
 allowed to log in!</p></li>
-<li><p>while you're in there, check that file does NOT have a setting for
+<li><p>While you're in there, check that file does NOT have a setting for
 <code>AuthorizedKeysFile</code>.  See <code>man sshd_config</code> for details.  This setting is
 a show stopper for gitolite to use ssh.</p></li>
-<li><p>some OSs/distributions require that the "git" user should have a password
+<li><p>Some OSs/distributions require that the "git" user should have a password
 and/or not be a locked account.  You may want to check that as well.</p></li>
-<li><p>if all that fails, log onto the server as root, <code>cd /var/log</code>, and look
+<li><p>If all that fails, log onto the server as root, <code>cd /var/log</code>, and look
 for a file called <code>auth.log</code> or <code>secure</code> or some such name.  Look inside
 this file for messages matching the approximate time of your last attempt
 to login, to see if they tell you what is the problem.</p></li>
@@ -323,10 +323,10 @@ especially good at finding duplicate keys and such.</p>
 from some gitolite clone, then follow these steps:</p>
 
 <ul>
-<li><p>get a copy of <code>~/.ssh/authorized_keys</code> from the server and put it in
-<code>/tmp/foo</code> or something</p></li>
-<li><p>cd to <code>~/.ssh</code></p></li>
-<li><p>run <code>/path/to/sshkeys-lint *.pub &lt; /tmp/foo</code></p></li>
+<li><p>Get a copy of <code>~/.ssh/authorized_keys</code> from the server and put it in
+<code>/tmp/foo</code> or something.</p></li>
+<li><p>cd to <code>~/.ssh</code>.</p></li>
+<li><p>Run <code>/path/to/sshkeys-lint *.pub &lt; /tmp/foo</code>.</p></li>
 </ul>
 
 <p>Note that it is not trying to log in or anything -- it's just comparing
@@ -339,11 +339,11 @@ the server, you're done with this step.</p>
 need.  Be careful:</p>
 
 <ul>
-<li><p>do not just rename the ".pub" file; you will have to rename the
+<li><p>Do not just rename the ".pub" file; you will have to rename the
 corresponding private key also (the one with the same basename but without
-an extension)</p></li>
-<li><p>if you're running ssh-agent, you may have to delete (using <code>ssh-add -D</code>)
-and re-add identities for it to pick up the renamed ones correctly</p></li>
+an extension).</p></li>
+<li><p>If you're running ssh-agent, you may have to delete (using <code>ssh-add -D</code>)
+and re-add identities for it to pick up the renamed ones correctly.</p></li>
 </ul>
 
 <h4>typical cause(s)</h4>
@@ -365,7 +365,7 @@ you're using ssh-agent, otherwise these new keys may not work.</p>
 <h3><a name="stsapp3"></a> appendix 3: ssh client may not be offering the right key</h3>
 
 <ul>
-<li><p>make sure the right private key is being offered.  Run ssh in very
+<li><p>Make sure the right private key is being offered.  Run ssh in very
 verbose mode and look for the word "Offering", like so:</p>
 
 <pre><code>ssh -vvv user@host pwd 2&gt; &gt;(grep -i offer)
@@ -440,10 +440,10 @@ the server.  (This is by design.  Don't argue...)</p>
 <p>This means that, you get 2 kinds of errors if you bypass gitolite</p>
 
 <ul>
-<li><p>when you use <code>git@server:reponame</code> with a key that bypasses gitolite
+<li><p>When you use <code>git@server:reponame</code> with a key that bypasses gitolite
 (i.e., gets you a shell), this prefixing does not happen, and so the repo
 is not found.  Neither a clone/fetch nor a push will work.</p></li>
-<li><p>conversely, consider <code>git@server:repositories/reponame.git</code>.  The clone
+<li><p>Conversely, consider <code>git@server:repositories/reponame.git</code>.  The clone
 operation will work -- you're using the full Unix path, (assuming default
 <code>$REPO_BASE</code> setting), and so the shell finds the repo where you said it
 would be.  However, when you push, gitolite's <strong>update hook</strong> kicks in,

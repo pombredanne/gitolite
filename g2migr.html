@@ -49,11 +49,11 @@ differences are in the rc file, mirroring, "NAME/" rules, and delegation.</p>
 <blockquote>
   <hr />
 
-<p><strong>presetting the rc file</strong></p>
+<p><strong>Presetting the rc file</strong></p>
 
 <p>Some rc settings in the older gitolite are such that you cannot directly
-  run <code>gitolite setup</code> when you're ready to migrate.  Doing that will
-  <strong>clobber</strong> something important.  See <a href="g2migr.html#rc-preset">presetting the rc file</a>
+  run <code>gitolite setup</code> when you're ready to migrate.  <strong>Doing that will
+  clobber something important</strong>.  See <a href="g2migr.html#rc-preset">presetting the rc file</a>
   for details.</p>
 
 <hr />
@@ -80,7 +80,7 @@ need to add a deny rule at the end because fallthru is "success" for all
 <a href="vref.html">VREFs</a> now, including the "NAME" VREF.</p></li>
 <li><p><a href="g2incompat.html#g2i-subconf">subconf</a>: if you're using <a href="deleg.html">delegation</a>, there is no
 implicit "subconf" at the end; you'll have to add it in.</p></li>
-<li><p>there are several important differences in mirroring.  You can start from
+<li><p>There are several important differences in mirroring.  You can start from
 scratch by reading the new <a href="mirroring.html">mirroring</a> doc or
 <a href="g2incompat.html#g2i-mirroring">migrate</a> (carefully!).</p></li>
 <li><p><code>ADMIN_POST_UPDATE_CHAINS_TO</code> -- <strong>dropped</strong>.  Add your script to the
@@ -246,8 +246,8 @@ WRITERS now.  Suggested command:</p></li>
 <h2><a name="rc-preset"></a> presetting the rc file</h2>
 
 <p>Some rc settings in the older gitolite are such that you cannot directly run
-<code>gitolite setup</code> when you're ready to migrate.  Doing that will <strong>clobber</strong>
-something important.  You have to create a default rc file, edit it
+<code>gitolite setup</code> when you're ready to migrate.  <strong>Doing that will clobber
+something important</strong>.  You have to create a default rc file, edit it
 appropriately, and <em>then</em> run <code>gitolite setup</code>.</p>
 
 <p>The most serious example of this is <code>GL_NO_SETUP_AUTHKEYS</code>, which tells the

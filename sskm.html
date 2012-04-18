@@ -287,18 +287,18 @@ you have the following keys:
 <p>These are the things that can break if you allows your users to use this command:</p>
 
 <ul>
-<li><p>if you, as the gitolite admin, are in the habit of force-pushing changes
+<li><p>If you, as the gitolite admin, are in the habit of force-pushing changes
 to the admin repo instead of doing a <code>git pull</code> (or, even better, a <code>git
 pull --rebase</code>) then you had better not enable this command.  Your users
 will eventually come after you with pitchforks ;-)</p></li>
-<li><p>there is no way to distinguish <code>foo/alice.pub</code> from <code>bar/alice.pub</code> using
+<li><p>There is no way to distinguish <code>foo/alice.pub</code> from <code>bar/alice.pub</code> using
 this command.  You can distinguish <code>foo/alice.pub</code> from
 <code>bar/alice@home.pub</code>, but that's not because of the foo and bar, it's
 because the two files have different keyids.</p>
 
 <p>In other words, sskm only works with the older style, not with the
 "subdirectory" style of <a href="users.html#multi-key">multi-key</a> management.</p></li>
-<li><p>keys placed in specific folders (for whatever reasons), will probably not
+<li><p>Keys placed in specific folders (for whatever reasons), will probably not
 stay in those folders if this command is used.  Even a key delete, followed
 by undoing the delete, will cause the key to effectively move to the root
 of the key store (i.e., the <code>keydir</code> directory in the gitolite-admin repo).</p></li>
