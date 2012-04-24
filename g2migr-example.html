@@ -22,7 +22,7 @@
 </p>
 <h1>migration example</h1>
 
-<p>This shows what typical migration would look like, using a test setup.</p>
+<p>This shows what a typical migration would look like, using a test setup.</p>
 
 <ul>
 <li><a href="g2migr-example.html">migration example</a>
@@ -38,6 +38,8 @@
 <li>step 1</li>
 <li>step 2</li>
 <li>step 3</li>
+<li>step 4</li>
+<li>step 5</li>
 </ul></li>
 <li>checking things out</li>
 </ul></li>
@@ -152,15 +154,6 @@ WARNING     found 3 gl-creater files; see docs
 ...all done...
 </code></pre>
 
-<p>So first we fix up the gl-creater files, as the docs say:</p>
-
-<pre><code>$ cd $HOME/repositories
-$ find . -type d -name "*.git" -prune | while read r
-&gt; do
-&gt;     mv $r/gl-creater $r/gl-creator
-&gt; done 2&gt;/dev/null
-</code></pre>
-
 <h2>the actual migration</h2>
 
 <p>Here's the actual migration, step by step</p>
@@ -233,6 +226,8 @@ random name:</p>
 Initialized empty Git repository in /home/g4/repositories/gitolite-admin.git/
 </code></pre>
 
+<h3>step 4</h3>
+
 <p>Now go to your old clone, and push it:</p>
 
 <pre><code>$ cd old.ga
@@ -278,6 +273,17 @@ Total 1 (delta 0), reused 0 (delta 0)
 Unpacking objects: 100% (1/1), done.
 To /home/g4/repositories/gitolite-admin.git
    1474770..4c2b41d  master -&gt; master
+</code></pre>
+
+<h3>step 5</h3>
+
+<p>The only thing left is to fix up the gl-creater files:</p>
+
+<pre><code>$ cd $HOME/repositories
+$ find . -type d -name "*.git" -prune | while read r
+&gt; do
+&gt;     mv $r/gl-creater $r/gl-creator
+&gt; done 2&gt;/dev/null
 </code></pre>
 
 <p>And we're done!</p>
