@@ -104,4 +104,22 @@ end).</p>
 <p>The third choice (which you may have guessed already if you're familiar
 with regular expressions) is to allow anything and everything:
 <code>$GIT_CONFIG_KEYS = '.*';</code></p></li>
+<li><p><code>DEFAULT_ROLE_PERMS</code>, string, default undef</p>
+
+<p>This sets default wildcard permissions for newly created wildcard repos.</p>
+
+<p>If set, this value will be used as the default role permissions for new
+wildcard repositories. The user can change this value with the perms
+command as desired after repository creation; it is only a default.</p>
+
+<p>Please be aware this is potentially a multi-line variable.  In most
+setups, it will be left undefined.  Some installations may benefit from
+setting it to <code>READERS @all</code>.</p>
+
+<p>If you want multiple roles to be assigned by default, here is how.  Note
+double quotes this time, due to the embedded newline, which in turn
+require the '@' to be escaped:</p>
+
+<pre><code>DEFAULT_ROLE_PERMS  =&gt;  "READERS \@all\nWRITERS \@senior_devs",
+</code></pre></li>
 </ul>

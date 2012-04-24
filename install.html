@@ -150,10 +150,13 @@ gitolite/install
 
 # option 2
 gitolite/install -ln
-# defaults to $HOME/bin, or use a specific directory:
+# defaults to $HOME/bin (which is assumed to exist)
+#   ** or **
+# or use a specific directory (please supply full path):
 gitolite/install -ln /usr/local/bin
 
 # option 3
+# (again, please supply a full path)
 gitolite/install -to /usr/local/gitolite/bin
 </code></pre>
 
@@ -214,17 +217,25 @@ been implemented in g3.</p></li>
 <li><p>Read the <a href="g2migr.html">g2 migration</a> page to see what changes affect you and
 your users, and how much time it might take you to migrate.  (The closer
 you were to a default install of the old gitolite, the less time a
-migration will take.)</p></li>
+migration will take.)</p>
+
+<p>This includes at least running <code>check-g2-compat</code> to see what are the big
+issues you might need to address during the migration.</p></li>
 </ol>
 
 <h3>the actual migration</h3>
+
+<p>(Note: You may also like the <a href="g2migr-example.html">example migration</a>).</p>
 
 <p><strong>Note</strong>: nothing in any of the gitolite install/setup/etc will ever touch the
 <em>data</em> in any repository except the gitolite-admin repo.  The only thing it
 will normally touch in normal repos is the <code>update</code> hook.</p>
 
+<p><strong>Note: all migration happens on the server; you do not need your
+workstation</strong>.</p>
+
 <ol>
-<li><p><strong>On the server</strong>, carefully wipe out the old gitolite:</p>
+<li><p>Carefully wipe out the old gitolite:</p>
 
 <ul>
 <li><p>The <strong>code</strong></p>
@@ -263,7 +274,11 @@ somewhere else.</p></li>
 variables listed as requiring preset, follow those instructions to create
 your new rc file.</p></li>
 <li><p>Install gitolite g3; see <a href="qi.html">quick install and setup</a> or <a href="install.html">install</a>
-followed by <a href="setup.html">setup</a>.</p></li>
+followed by <a href="setup.html">setup</a>.  However, the 'setup' step need not supply a
+private key.  You can run it as <code>gitolite setup -a admin</code>.</p>
+
+<p>NOTE: ignore any 'split conf not set, gl-conf present...' errors at this
+time.  You may see none, some, or many.  It does not matter right now.</p></li>
 <li><p>Make sure your gitolite-admin clone has the correct pubkey for the
 administrator in its <code>keydir</code> directory, then run <a href="emergencies.html#bypass"><code>gitolite push
 -f</code></a> to overwrite the "default" admin repo created by the install.</p></li>

@@ -287,13 +287,13 @@ you have the following keys:
 
 <h2>important notes for the admin</h2>
 
-<p>These are the things that can break if you allows your users to use this command:</p>
+<p>These are the things that can break if you allow your users to use this
+command:</p>
 
 <ul>
-<li><p>If you, as the gitolite admin, are in the habit of force-pushing changes
-to the admin repo instead of doing a <code>git pull</code> (or, even better, a <code>git
-pull --rebase</code>) then you had better not enable this command.  Your users
-will eventually come after you with pitchforks ;-)</p></li>
+<li><p>"sskm" clones, changes, and pushes back the gitolite-admin repo.  This
+means, even if you're the only administrator, you should never 'git push
+-f', in case you end up overwriting something sskm did.</p></li>
 <li><p>There is no way to distinguish <code>foo/alice.pub</code> from <code>bar/alice.pub</code> using
 this command.  You can distinguish <code>foo/alice.pub</code> from
 <code>bar/alice@home.pub</code>, but that's not because of the foo and bar, it's

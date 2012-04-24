@@ -146,6 +146,13 @@ from the assumed location to the real one.</p></li>
 <p>(ancillary, non-core, or minor functionality lost)</p>
 
 <ul>
+<li><p>Built-in command <code>expand</code> -- <strong>dropped</strong>.  The 'info' command shows you
+both normal and wild repos now.  The output format is also much simpler.</p></li>
+<li><p>Built-in commands 'getperms', 'setperms' -- <strong>merged</strong> into external
+command 'perms'.  Run <code>ssh git@host perms -h</code> for details.</p>
+
+<p>Similarly, 'getdesc' and 'setdesc' have been merged into 'desc'.</p></li>
+<li><p>Several 'ADC's -- see the <a href="dev-status.html">dev-status</a> page for more on this.</p></li>
 <li><p><a href="g2incompat.html#g2i-gl-time">gl-time</a>: the CpuTime module replaces gl-time.</p></li>
 <li><p><code>BIG_INFO_CAP</code> -- <strong>dropped</strong>.  If you think you must have this, try it
 without and see if there's a difference.  If you <em>know</em> you need this,
@@ -159,7 +166,7 @@ convince me.</p></li>
 <li><p><code>GL_CONF</code>, <code>GL_CONF_COMPILED</code>, and <code>GL_KEYDIR</code> -- <strong>dropped</strong>.  You had no
 business touching these anyway; if you did, move them into the expected
 default locations before attempting to run <code>gitolite setup</code></p></li>
-<li><p><code>GL_GITCONFIG_KEYS</code> -- is now <code>GITCONFIG_KEYS</code>.</p></li>
+<li><p><code>GL_GITCONFIG_KEYS</code> -- is now <code>GIT_CONFIG_KEYS</code>.</p></li>
 <li><p><code>GL_LOGT</code> -- now has a fixed value; email me if this is a problem.</p></li>
 <li><p><code>GL_PACKAGE_CONF</code> and <code>GL_PACKAGE_HOOKS</code> -- <strong>dropped</strong>.  They are not
 needed anymore, but check if you had any custom hooks set in the latter
