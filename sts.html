@@ -1,5 +1,7 @@
 
-<head><style>
+<head>
+    <title>ssh troubleshooting</title>
+<style>
     body        { background: #fff; text-color: #000; margin-left:  40px;   font-size:  0.9em;  font-family: sans-serif; max-width: 800px; }
     h1          { background: #ffb; text-color: #000; margin-left: -30px;   border-top:    5px  solid #ccc; }
     h2          { background: #ffb; text-color: #000; margin-left: -20px;   border-top:    3px  solid #ddd; }
@@ -8,7 +10,8 @@
     code        { font-size:    1.1em;  background:  #ddf; text-color: #000; }
     pre         { margin-left:  2em;    background:  #ddf; text-color: #000; }
     pre code    { font-size:    1.1em;  background:  #ddf; text-color: #000; }
-</style></head>
+</style>
+</head>
 
 <p style="text-align:center">
     <a href="master-toc.html">master TOC</a>
@@ -176,22 +179,24 @@ client, instead of the default key.  See <a href="sts.html#stsapp3">appendix 3</
 <p>Thanks to an idea from Jesse Keating, a single key can allow both gitolite
 access <em>and</em> shell access.</p>
 
-<p>This is done by manually prefixing the username with "-s" as an extra argument
-in the "command=" part of <code>~/.ssh/authorized_keys</code>.  For example</p>
+<p>To do this, first add the line <code>'Shell::input',</code> to the <code>INPUT</code> list in the rc
+file.  Then, for each user you want to give shell access to, make the
+following changes manually in the authkeys file:</p>
 
-<pre><code>command="/home/g3/gitolite/src/gitolite-shell u1",no-port-[...etc...]
-</code></pre>
+<ul>
+<li>remove ",no-pty" from the relevant key line.</li>
+<li>insert the argument "-s" before the username on the command string.</li>
+<li>move this line out of the gitolite area so the next admin push does not
+wipe out your manual changes (you now have to manage this key manually if
+it needs to be changed).</li>
+</ul>
 
-<p>should be edited to be</p>
+<p>To automate this, you can maintain a list of shell-capable users in a file on
+the server (say <code>~/.gitolite.shellers</code>).  Then write a program to make the
+appropriate changes to just those users' lines in the authkeys file.  Finally,
+add this program to the <code>POST_COMPILE</code> array <em>after</em> the ssh-authkeys program.</p>
 
-<pre><code>command="/home/g3/gitolite/src/gitolite-shell -s u1",no-port-[...etc...]
-</code></pre>
-
-<p>and moved out of the gitolite area of the authkeys file.</p>
-
-<p>It should be easy to make src/triggers/post-compile/ssh-authkeys read a list
-of shell capable users from some file on the server and put in the "-s" for
-those users.  Patches welcome.</p>
+<p>Patches welcome.</p>
 
 <h4>simulating ssh-copy-id</h4>
 

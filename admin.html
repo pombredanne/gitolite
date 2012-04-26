@@ -1,5 +1,7 @@
 
-<head><style>
+<head>
+    <title>gitolite administration</title>
+<style>
     body        { background: #fff; text-color: #000; margin-left:  40px;   font-size:  0.9em;  font-family: sans-serif; max-width: 800px; }
     h1          { background: #ffb; text-color: #000; margin-left: -30px;   border-top:    5px  solid #ccc; }
     h2          { background: #ffb; text-color: #000; margin-left: -20px;   border-top:    3px  solid #ddd; }
@@ -8,7 +10,8 @@
     code        { font-size:    1.1em;  background:  #ddf; text-color: #000; }
     pre         { margin-left:  2em;    background:  #ddf; text-color: #000; }
     pre code    { font-size:    1.1em;  background:  #ddf; text-color: #000; }
-</style></head>
+</style>
+</head>
 
 <p style="text-align:center">
     <a href="master-toc.html">master TOC</a>
@@ -24,7 +27,8 @@
 
 <h2><a name="server"></a> server-side administration</h2>
 
-<p>The following activities require command line access to the server:</p>
+<p>The following activities require command line access to the server.  They are
+usually one-time or rarely done activities.</p>
 
 <ul>
 <li>Changing anything in the <a href="rc.html">rc</a> file.</li>
@@ -34,12 +38,21 @@
 
 <p>Please read the <a href="WARNINGS.html">WARNINGS</a> page first.</p>
 
-<h2><a name="conf"></a> access control (the gitolite.conf file)</h2>
+<h2><a name="adminrepo"></a> access control via the gitolite-admin repo</h2>
+
+<p>Most day-to-day administration of a gitolite site happens like this:</p>
+
+<ul>
+<li><a href="clone.html">clone</a> the gitolite-admin repo to your workstation</li>
+<li>make appropriate changes</li>
+<li>add, commit, and push</li>
+</ul>
+
+<h3><a name="conf"></a> the conf/gitolite.conf file</h3>
 
 <p>Most of gitolite's power is in the conf/gitolite.conf file, which specifies
-detailed access control for repos.</p>
-
-<h3><a name="confex"></a> example of a conf file</h3>
+detailed access control for repos.  Everything except <a href="users.html">adding users</a>
+happens from this file.</p>
 
 <p>Here is an example of a simple conf/gitolite.conf file.</p>
 

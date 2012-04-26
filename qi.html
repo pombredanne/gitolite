@@ -1,5 +1,7 @@
 
-<head><style>
+<head>
+    <title>quick install, setup, and clone</title>
+<style>
     body        { background: #fff; text-color: #000; margin-left:  40px;   font-size:  0.9em;  font-family: sans-serif; max-width: 800px; }
     h1          { background: #ffb; text-color: #000; margin-left: -30px;   border-top:    5px  solid #ccc; }
     h2          { background: #ffb; text-color: #000; margin-left: -20px;   border-top:    3px  solid #ddd; }
@@ -8,7 +10,8 @@
     code        { font-size:    1.1em;  background:  #ddf; text-color: #000; }
     pre         { margin-left:  2em;    background:  #ddf; text-color: #000; }
     pre code    { font-size:    1.1em;  background:  #ddf; text-color: #000; }
-</style></head>
+</style>
+</head>
 
 <p style="text-align:center">
     <a href="master-toc.html">master TOC</a>
@@ -22,29 +25,10 @@
 </p>
 <h1>quick install, setup, and clone</h1>
 
-<p>(Please do not ignore the "assumptions" list below).</p>
-
-<p>On the server:</p>
-
-<pre><code># get the software
-git clone git://github.com/sitaramc/gitolite
-
-# install it
-gitolite/install -ln
-
-# setup the initial repos with your key
-gitolite setup -pk your-name.pub
-</code></pre>
-
-<p>On your workstation:</p>
-
-<pre><code># clone the admin repo so you can start adding stuff
-git clone git@host:gitolite-admin.git
-</code></pre>
-
 <h2>ASSUMPTIONS</h2>
 
 <ul>
+<li><p>This is an ssh-based setup.  For smart http setup click <a href="http.html">here</a>.</p></li>
 <li><p>This is a fresh install, not a migration from the old gitolite (v1.x,
 v2.x).</p></li>
 <li><p>On the server, <code>$HOME/bin</code> exists and is in your <code>$PATH</code>.  If you don't
@@ -63,15 +47,33 @@ continuing, or read the more complete <a href="setup.html">setup</a> page.</li>
 </ul></li>
 </ul>
 
-<h2>Notes</h2>
+<h2>instructions</h2>
 
-<p>Note that the clone path is NOT "repositories/gitolite-admin.git".  If you
-clone with a path that includes "repositories/", the clone should fail.  If
-the clone <em>does</em> succeed, a subsequent push should fail :-)  See
-<a href="sts.html#ybpfail">this</a> for some details.  If that doesn't make enough sense read all
-of <a href="ssh.html">ssh</a>.</p>
+<p>On the server, as the hosting user (e.g., 'git'):</p>
+
+<pre><code># get the software
+git clone git://github.com/sitaramc/gitolite
+
+# install it
+gitolite/install -ln
+
+# setup the initial repos with your key
+gitolite setup -pk your-name.pub
+</code></pre>
+
+<p>On your workstation:</p>
+
+<pre><code># clone the admin repo so you can start adding stuff
+git clone git@host:gitolite-admin.git
+# Note 1: clone path must not include "repositories/"
+# Note 2: it may include the ".git" at the end but it is optional
+</code></pre>
 
 <h2>next steps</h2>
 
-<p>Next steps are usually adding <a href="users.html">users</a> and <a href="repos.html">repos</a> and learning about
-<a href="admin.html#conf">access control</a>.</p>
+<p>If this step succeeds, you can add <a href="users.html">users</a>, <a href="repos.html">repos</a>, or anything else
+described <a href="admin.html#adminrepo">here</a>.</p>
+
+<p>If this step fails, be sure to look at the <a href="ssh.html">ssh</a> documentation before asking
+for help.  (A very basic first step is to run <code>ssh git@host info</code>;
+<a href="user.html#info">this</a> page tells you what to expect).</p>

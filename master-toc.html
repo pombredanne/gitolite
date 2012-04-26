@@ -1,5 +1,7 @@
 
-<head><style>
+<head>
+    <title>gitolite documentation</title>
+<style>
     body        { background: #fff; text-color: #000; margin-left:  40px;   font-size:  0.9em;  font-family: sans-serif; max-width: 800px; }
     h1          { background: #ffb; text-color: #000; margin-left: -30px;   border-top:    5px  solid #ccc; }
     h2          { background: #ffb; text-color: #000; margin-left: -20px;   border-top:    3px  solid #ddd; }
@@ -8,7 +10,8 @@
     code        { font-size:    1.1em;  background:  #ddf; text-color: #000; }
     pre         { margin-left:  2em;    background:  #ddf; text-color: #000; }
     pre code    { font-size:    1.1em;  background:  #ddf; text-color: #000; }
-</style></head>
+</style>
+</head>
 
 <p style="text-align:center">
     <a href="master-toc.html">master TOC</a>
@@ -39,7 +42,7 @@
 <li><a href="emergencies.html#lost-key">lost</a> admin key/access</li>
 <li><a href="emergencies.html#bypass">bypass</a>ing gitolite</li>
 <li><a href="emergencies.html#clean">clean</a>ing out a botched install</li>
-<li><a href="emergencies.html#ce">common</a> errors (TBD)</li>
+<li><a href="emergencies.html#ce">common</a> errors</li>
 <li><a href="emergencies.html#ue">uncommon</a> errors</li>
 <li>things that are <a href="emergencies.html#ngp">not gitolite problems</a></li>
 </ul>
@@ -69,20 +72,21 @@
 
 <h2><a href="setup.html">setup</a></h2>
 
+<h2><a href="clone.html">clone</a></h2>
+
 <h2>gitolite <a href="admin.html">admin</a>istration</h2>
 
 <ul>
-<li><a href="admin.html#server">server</a>-side
+<li>(<a href="admin.html#server">server-side</a>) settings, hooks, etc.
 <ul>
 <li>(<a href="WARNINGS.html">link</a>: important cautions on server side activity)</li>
 <li>changing settings in the <a href="rc.html">rc</a> file</li>
 <li>installing custom <a href="cust.html#hooks">hooks</a></li>
 <li>(<a href="rare.html#existing">link</a>: moving existing repos into gitolite)</li>
 </ul></li>
-<li><a href="admin.html#conf">access control</a> (the gitolite.conf file)
+<li>(<a href="admin.html#adminrepo">client-side</a>) access control via the gitolite-admin repo
 <ul>
-<li><a href="admin.html#confex">example</a> of a conf file</li>
-<li>basic <a href="syntax.html">syntax</a>
+<li>basic <a href="syntax.html">syntax</a> of the <a href="admin.html#conf">conf</a> file
 <ul>
 <li>include files</li>
 <li>(<a href="cust.html#sugar">link</a>: syntactic sugar)</li>
@@ -141,6 +145,7 @@
 <ul>
 <li><a href="special.html#writable">disabling pushes</a> to take backups</li>
 <li><a href="special.html#pers">personal</a> branches</li>
+<li>(<a href="vref.html#votes">link</a>: voting on commits)</li>
 <li><a href="deleg.html">delegating</a> access control responsibilities
 <ul>
 <li>(<a href="vref.html#NAME">link</a>: the NAME VREF)</li>

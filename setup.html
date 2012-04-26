@@ -1,5 +1,7 @@
 
-<head><style>
+<head>
+    <title>setting up gitolite</title>
+<style>
     body        { background: #fff; text-color: #000; margin-left:  40px;   font-size:  0.9em;  font-family: sans-serif; max-width: 800px; }
     h1          { background: #ffb; text-color: #000; margin-left: -30px;   border-top:    5px  solid #ccc; }
     h2          { background: #ffb; text-color: #000; margin-left: -20px;   border-top:    3px  solid #ddd; }
@@ -8,7 +10,8 @@
     code        { font-size:    1.1em;  background:  #ddf; text-color: #000; }
     pre         { margin-left:  2em;    background:  #ddf; text-color: #000; }
     pre code    { font-size:    1.1em;  background:  #ddf; text-color: #000; }
-</style></head>
+</style>
+</head>
 
 <p style="text-align:center">
     <a href="master-toc.html">master TOC</a>
@@ -22,12 +25,17 @@
 </p>
 <h1>setting up gitolite</h1>
 
+<p>This is the second step in using gitolite, after <a href="install.html">install</a>.  This also
+happens on the server,  (The next step is <a href="clone.html">clone</a>).</p>
+
+<hr />
+
 <p>Installing the software gets you ready to use it, but the first "use" of it is
 always the "setup" command.</p>
 
-<p>The first time you run it, you need to have a public key file ready.  If the
-main gitolite admin's username is "alice", this file should be named
-"alice.pub".  Then run</p>
+<p>The first time you run it, you need to have a public key file (usually from
+the admin's workstation) ready.  If the main gitolite admin's username is
+"alice", this file should be named "alice.pub".  Then run</p>
 
 <pre><code>gitolite setup -pk alice.pub
 </code></pre>
