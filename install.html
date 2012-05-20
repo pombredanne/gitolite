@@ -211,15 +211,16 @@ default into the binary, making the env var optional.</p></li>
 <p>With that said, here's one way to package gitolite:</p>
 
 <ul>
-<li><p>Put the two executables (gitolite and gitolite-shell) somewhere in PATH.
-Then change the 2 assignments to <code>$ENV{GL_BINDIR}</code>, one in 'gitolite', one
-in 'gitolite-shell', to "/usr/libexec/gitolite".</p>
+<li><p>Put the executable <code>gitolite</code> somewhere in PATH.  Put the executable
+<code>gitolite-shell</code> in /usr/libexec/gitolite (along with those 5 directories).</p>
 
-<p>This is equivalent to "make" embedding the exec-path into the executable.</p>
+<p>Change the 2 assignments to <code>$ENV{GL_BINDIR}</code>, one in 'gitolite', one in
+'gitolite-shell', to "/usr/libexec/gitolite" from <code>$FindBin::RealBin</code>.
+This is equivalent to "make" embedding the exec-path into the executable.</p>
 
 <p><strong>OR</strong></p>
 
-<p>Put the two executables <code>gitolite</code> and <code>gitolite-shell</code> also into
+<p>Put both executables <code>gitolite</code> and <code>gitolite-shell</code> also into
 /usr/libexec/gitolite (i.e., as siblings to the 5 directories mentioned
 above).  Then <em>symlink</em> <code>/usr/libexec/gitolite/gitolite</code> to some directory
 in the PATH.  Do not <em>copy</em> it; it must be a symlink.</p>
