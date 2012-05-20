@@ -49,7 +49,7 @@ followed by <a href="setup.html">setup</a>, then <a href="clone.html">clone</a>.
 <li>getting the software</li>
 <li>the actual install</li>
 <li>upgrading</li>
-<li>packaging gitolite</li>
+<li><a href="install.html#package">packaging gitolite</a></li>
 <li><a href="install.html#migr">migrating</a>
 <ul>
 <li>pre-migration checks</li>
@@ -188,25 +188,45 @@ arguments as before).</li>
 <li>Run <code>gitolite setup</code>.</li>
 </ul>
 
-<h2>packaging gitolite</h2>
+<h2><a name="package"></a> packaging gitolite</h2>
 
-<p>Here are the requirements for gitolite:</p>
+<p>Gitolite has broad similarities to git in terms of packaging requirements.</p>
 
 <ul>
-<li><p>The programs <code>gitolite</code> and <code>gitolite-shell</code>, and the directories
-<code>commands</code>, <code>lib</code>, <code>syntactic-sugar</code>, <code>triggers</code>, and <code>VREF</code> must all be
-in the same directory.</p>
+<li><p>Git has 150 executables to marshal and put somewhere.  Gitolite has the
+directories <code>commands</code>, <code>lib</code>, <code>syntactic-sugar</code>, <code>triggers</code>, and <code>VREF</code>.</p>
 
 <p>It doesn't matter what this directory is.  As an example, Fedora keeps
 git's 150 executables in /usr/libexec/git-core, so /usr/libexec/gitolite
 may be a good choice; it's upto you.</p>
 
-<p>The rest of this section will assume you chose /usr/libexec/gitolite as
-the location.  Adjust as needed.</p></li>
-<li><p>The program <code>/usr/libexec/gitolite/gitolite</code> must then be <em>symlinked</em> to
-some directory in the PATH.  Do not <em>copy</em> it; it must be a symlink.</p></li>
-<li><p>The <code>Gitolite</code> subdirectory in <code>/usr/libexec/gitolite/lib</code> can stay there,
-<strong>OR</strong>, if your distro policies don't allow that, can be put in any
+<p><em>The rest of this section will assume you chose /usr/libexec/gitolite as
+the location, and that this location contains the 5 directories named
+above</em>.</p></li>
+<li><p>Git has the <code>GIT_EXEC_PATH</code> env var to point to this directory.  Gitolite
+has <code>GL_BINDIR</code>.  However, in git, the "make" process embeds a suitable
+default into the binary, making the env var optional.</p></li>
+</ul>
+
+<p>With that said, here's one way to package gitolite:</p>
+
+<ul>
+<li><p>Put the two executables (gitolite and gitolite-shell) somewhere in PATH.
+Then change the 2 assignments to <code>$ENV{GL_BINDIR}</code>, one in 'gitolite', one
+in 'gitolite-shell', to "/usr/libexec/gitolite".</p>
+
+<p>This is equivalent to "make" embedding the exec-path into the executable.</p>
+
+<p><strong>OR</strong></p>
+
+<p>Put the two executables <code>gitolite</code> and <code>gitolite-shell</code> also into
+/usr/libexec/gitolite (i.e., as siblings to the 5 directories mentioned
+above).  Then <em>symlink</em> <code>/usr/libexec/gitolite/gitolite</code> to some directory
+in the PATH.  Do not <em>copy</em> it; it must be a symlink.</p>
+
+<p>Gitolite will find the exec-path by following the symlink.</p></li>
+<li><p>The <code>Gitolite</code> subdirectory in <code>/usr/libexec/gitolite/lib</code> can stay right
+there, <strong>OR</strong>, if your distro policies don't allow that, can be put in any
 directory in perl's <code>@INC</code> path (such as <code>/usr/share/perl5/vendor_perl</code>).</p></li>
 <li><p>Finally, a file called <code>/usr/libexec/gitolite/VERSION</code> must contain a
 suitable version string.</p></li>
