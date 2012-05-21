@@ -25,6 +25,31 @@
 </p>
 <h1>notes for developers</h1>
 
+<ul>
+<li><a href="dev-notes.html">notes for developers</a>
+<ul>
+<li>environment variables and other inputs</li>
+<li>APIs
+<ul>
+<li>the shell API</li>
+<li>the perl API</li>
+</ul></li>
+<li>writing your own...
+<ul>
+<li>...hooks
+<ul>
+<li>anything but the update hook</li>
+<li>update hook</li>
+</ul></li>
+<li>...commands</li>
+<li>...trigger programs</li>
+<li>..."sugar"</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<hr />
+
 <p>Gitolite has a huge bunch of existing features that gradually need to moved
 over.  Plus you may want to write your own programs to interact with it.</p>
 
@@ -62,7 +87,7 @@ src/commands/desc.</p></li>
 <li><p><code>gitolite git-config</code> to check gitolite options or git config variables
 directly from gitolite's "compiled" output, (i.e., without looking at the
 actual <code>repo.git/config</code> file or using the <code>git config</code> command).  Example
-use: none yet.</p></li>
+use: src/triggers/post-compile/update-gitweb-access-list.</p></li>
 <li><p><code>gitolite query-rc</code> to check the value of an RC variable.  Example use:
 src/commands/desc.</p></li>
 </ul>
