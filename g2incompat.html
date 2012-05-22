@@ -122,7 +122,7 @@ like 'gitolite.mirror.nightly', etc).  You can certainly add lines like</p>
 </code></pre>
 
 <p>but they will not be processed by gitolite.  Your cron jobs should use
-<code>gitolite git-config</code> to query this variable, grab the list of repos, and
+<code>gitolite git-config</code> to query this variable, grab the list of peers, and
 run <code>gitolite mirror</code> on each of them.</p></li>
 <li><p>The external command to resync mirrors is 'mirror', run just like any
 other <a href="cust.html#commands">command</a>.  In particular, you can run <code>gitolite mirror

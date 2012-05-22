@@ -127,10 +127,12 @@ don't need gitolite!</p></li>
 <ul>
 <li><p><code>WARNING: split conf not set, gl-conf present for &lt;repo&gt;</code></p>
 
-<p>(Case 1) This can happen if you have a <em>bare</em> repo (i.e., some <code>repo.git</code>
-directory) copied from g2 with <code>GL_BIG_CONFIG</code> on, and you pushed a change
-to the conf or ran certain commands <em>before</em> adding the newly added repo
-to the conf file.</p>
+<p>(Case 1) you copied a bare repo ("repo.git") from another g3 site (or g2
+with <code>GL_BIG_CONFIG</code> on).  Then you pushed a change to "gitolite.conf" or
+ran certain server-side commands without adding the repo to the conf.</p>
+
+<p>Conversely, you removed "repo" from "gitolite.conf" but did not remove the
+actual "repo.git" on disk.</p>
 
 <p>(Case 2) This can also happen if you changed something like this</p>
 
