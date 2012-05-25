@@ -33,6 +33,8 @@
 <li><a href="special.html#writable">disabling pushes to take backups</a></li>
 <li><a href="special.html#pers">"personal" branches</a></li>
 <li>delegating access control responsibilities</li>
+<li><a href="special.html#keysonly">using pubkeys obtained from elsewhere</a></li>
+<li><a href="special.html#pushhook">updating hooks via the admin repo</a></li>
 </ul></li>
 </ul>
 
@@ -81,3 +83,67 @@ only to his own sub-hierarchy.</li>
 <h2>delegating access control responsibilities</h2>
 
 <p>See <a href="deleg.html">this</a>.</p>
+
+<h2><a name="keysonly"></a> using pubkeys obtained from elsewhere</h2>
+
+<p>If you're not managing keys via the gitolite-admin repo, but getting them from
+somewhere else, you'll want to periodically "update" the keys.</p>
+
+<p>To do that, first edit your rc file and add something like this:</p>
+
+<pre><code>SSH_AUTHKEYS                =&gt;
+    [
+        'post-compile/ssh-authkeys',
+    ],
+</code></pre>
+
+<p>Then write a script that</p>
+
+<ul>
+<li><p>gets all the keys and dumps them into <code>$HOME/.gitolite/keydir</code> (or into a
+subdirectory of it).</p></li>
+<li><p>runs <code>gitolite trigger SSH_AUTHKEYS</code>.</p></li>
+</ul>
+
+<p>Run this from cron or however you want.</p>
+
+<h2><a name="pushhook"></a> updating hooks via the admin repo</h2>
+
+<p>Gitolite by default maintains the distinction between someone who can push to
+the admin repo and someone who has shell access to the server.  As a result,
+you cannot change any hooks merely by pushing the admin repo.</p>
+
+<p>But some people don't care about this and want to do it anyway.  Besides,
+there <em>is</em> one advantage: your hooks can also be versioned now.</p>
+
+<p>So here's how to add/change hooks when you push the gitolite-admin repo:</p>
+
+<ol>
+<li><p>Put all common hooks in a new directory called 'common-hooks'.</p></li>
+<li><p>Create a trigger program called 'propagate-hooks' in 'src/triggers' that
+contains this:</p>
+
+<pre><code>#!/bin/sh
+
+cd $GL_ADMIN_BASE
+cp -a common-hooks/* hooks/common
+
+gitolite setup --hooks-only
+</code></pre></li>
+<li><p>Add this to the <code>POST_COMPILE</code> trigger list in the rc file.</p></li>
+</ol>
+
+<p>And that should be it, pretty much.</p>
+
+<p>If you have lots of repos this is inefficient -- because the hook fixup will
+run on <em>any</em> change to the admin repo, even if the change has nothing to do
+with hooks.</p>
+
+<p>If you're concerned about this, put the script in 'src/commands' instead of
+'src/triggers'.  (You might want to add some access control; see other
+commands for inspiration, but it's not really needed in this case).</p>
+
+<p>Then, whenever any hooks have changed, the admin can run</p>
+
+<pre><code>ssh git@host propagate-hooks
+</code></pre>
