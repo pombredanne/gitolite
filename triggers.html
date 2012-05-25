@@ -89,7 +89,7 @@ the next section.</p></li>
 description of when the trigger runs:</p>
 
 <ul>
-<li><p><code>ACCESS_1</code> runs after the first access check.  Arguments:</p>
+<li><p><code>ACCESS_1</code> runs after the first access check.  Extra arguments:</p>
 
 <ul>
 <li>repo</li>
@@ -101,7 +101,7 @@ the uppercase word "DENIED", the access was rejected.  Otherwise
 result contains the refex that caused the access to succeed.</li>
 </ul></li>
 <li><p><code>ACCESS_2</code> runs after the second access check, in the update hook.
-Arguments:</p>
+Extra arguments:</p>
 
 <ul>
 <li>repo</li>
@@ -111,7 +111,7 @@ Arguments:</p>
 <li>result (see above)</li>
 </ul></li>
 <li><p><code>PRE_GIT</code> and <code>POST_GIT</code> run just before and after the git command.
-Arguments:</p>
+Extra arguments:</p>
 
 <ul>
 <li>repo</li>
@@ -122,15 +122,22 @@ Arguments:</p>
 'git-upload-archive') being invoked.</li>
 </ul></li>
 <li><p><code>PRE_CREATE</code> and <code>POST_CREATE</code> run just before and after a new "<a href="wild.html">wild</a>"
-repo is created by user action.  Arguments:</p>
+repo is created by user action.  Extra arguments:</p>
 
 <ul>
 <li>repo</li>
 <li>user</li>
+</ul>
+
+<p>They are also run when a <em>normal</em> repo is created (say by adding a "repo
+foo" line to the conf file).  This case has only one extra argument:</p>
+
+<ul>
+<li>repo</li>
 </ul></li>
 <li><p><code>POST_COMPILE</code> runs after an admin push has successfully "compiled" the
 config file.  By default, the next thing is to update the ssh authkeys
 file, then all the 'git-config's, gitweb access, and daemon access.</p>
 
-<p>No arguments.</p></li>
+<p>No extra arguments.</p></li>
 </ul>
