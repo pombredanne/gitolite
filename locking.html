@@ -25,18 +25,19 @@
 </p>
 <h1>locking binary files</h1>
 
-<p>Git is a DVCS, so true locking, a la SVN and other legacy VCSs, is not
-possible.</p>
+<p>Locking is useful to make sure that binary files (office docs, images, ...)
+don't get into a merge state.  (<font color="gray">If you think it's not a big
+deal, you have never manually merged independent changes to an ODT or
+something!</font>)</p>
 
-<p>However, even in a DVCS, there is a central server acting as the canonical
-source and collaboration point, so it is possible to at least prevent commits
-from being pushed that contains changes to files locked by someone else.</p>
+<p>When git is used in a truly distributed fashion, locking is impossible.
+However, in most corporate setups, there is a single central server acting as
+the canonical source of truth and collaboration point for all developers.  In
+this situation it should be possible to at least prevent commits from being
+pushed that contains changes to files locked by someone else.</p>
 
-<p>You might need this if you have lots of binary files, like odt files, images,
-and such.  Binary files cannot really be <em>merged</em> so it is sometimes useful to
-have some sort of locking mechanism for them.  The two "lock" programs (one a
-command that a user uses, and one a VREF that the admin adds to a repo's
-access rules) together achieve this.</p>
+<p>The two "lock" programs (one a command that a user uses, and one a VREF that
+the admin adds to a repo's access rules) together achieve this.</p>
 
 <hr />
 
