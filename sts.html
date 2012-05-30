@@ -50,6 +50,7 @@ tricks that gitolite can do.</p>
 <li>random tips, tricks, and notes
 <ul>
 <li>giving shell access to gitolite users</li>
+<li>distinguishing one key from another</li>
 <li>simulating ssh-copy-id</li>
 <li>problems with using non-openssh public keys</li>
 <li>windows issues</li>
@@ -231,6 +232,38 @@ example it could be</p>
 
 <p>Then run <code>gitolite compile; gitolite trigger POST_COMPILE</code> or push a dummy
 change to the admin repo.</p>
+
+<h3>distinguishing one key from another</h3>
+
+<p>Since a user can have <a href="users.html#multi-key">more than one key</a>, it is sometimes useful
+to distinguish one key from another.  Sshd does not tell you even the
+fingerprint of the key that finally matched, so normally all you have is the
+<code>GL_USER</code> env var.</p>
+
+<p>However, if you replace</p>
+
+<pre><code>'post-compile/ssh-authkeys',
+</code></pre>
+
+<p>in the <code>POST_COMPILE</code> trigger list in the rc file with</p>
+
+<pre><code>'post-compile/ssh-authkeys --key-file-name',
+</code></pre>
+
+<p>then an extra argument is added after the username in the "command" variable
+of the authkeys file.  That is, instead of this:</p>
+
+<pre><code>command="/home/g3/gitolite/src/gitolite-shell u3",no-port-forwarding,...
+</code></pre>
+
+<p>you get this:</p>
+
+<pre><code>command="/home/g3/gitolite/src/gitolite-shell u3 keydir/u3.pub",no-port-forwarding,...
+</code></pre>
+
+<p>You can then write an INPUT trigger to do whatever you need with the file
+name, which is in <code>$ARGV[1]</code> (the second argument).  The actual file is
+available at <code>$ENV{GL_ADMIN_BASE}/$ARGV[1]</code> if you need its contents.</p>
 
 <h3>simulating ssh-copy-id</h3>
 
