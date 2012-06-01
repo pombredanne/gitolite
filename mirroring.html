@@ -81,8 +81,29 @@ only a slave for some.</p></li>
 
 <ul>
 <li><p>Mirroring will never <em>create</em> a repo on a slave; it has to exist and be
-prepared to receive updates from the master.  (For example, <a href="wild.html">wild</a> repos
-must be created on the slave as well, otherwise they will not propagate).</p></li>
+prepared to receive updates from the master.</p>
+
+<p>However, there is limited support for auto-creating wild card repos and
+sending 'perms' info across, with the following caveats at present:</p>
+
+<ul>
+<li><p>This has only been minimally tested.  For example, complex setups or
+asymmetric configs on master and slave, etc. have NOT been tested.</p></li>
+<li><p>This has also not been tested with redirected pushes.  It may not
+work.</p></li>
+<li><p>As with lots of extra features in gitolite, smart http support is not
+on my radar.  Don't ask.</p></li>
+<li><p>If you change permissions using the 'perms' command, they will only go
+across on the next push.  Or, if you know the name of the slave
+server, you can run</p>
+
+<pre><code>ssh git@host mirror push slave-server-name repo-name
+</code></pre></li>
+</ul>
+
+<p><p>Please test it out and let me know if something surprising happens.  Be
+aware that I have been known to claim bugs are features if I don't have
+time to fix them immediately :-)</p></li>
 <li><p>Mirroring is only for git repos.  Ancillary files like gl-creator and
 gl-perms in the repo directory are not mirrored; you must do that
 separately.  Files in the admin directory (like log files) are also not
@@ -91,7 +112,7 @@ mirrored.</p></li>
 Mirroring checks also will not work -- for example, you can push to a
 slave, which is not usually a good idea.  So don't bypass gitolite if the
 repo is mirrored!</p></li>
-</ul>
+</ul></p>
 
 <h2>setting up mirroring</h2>
 
