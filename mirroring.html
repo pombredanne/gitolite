@@ -84,21 +84,25 @@ only a slave for some.</p></li>
 prepared to receive updates from the master.</p>
 
 <p>However, there is limited support for auto-creating wild card repos and
-sending 'perms' info across, with the following caveats at present:</p>
+sending 'perms' info across, with the following caveats at present.  (Some
+of this text won't make sense unless you know what those features are).</p>
 
 <ul>
+<li><p><em>WARNING: it does NOT make sense to mirror wild repos in setups where
+the authentication data is not the same (i.e., where "alice" on the
+master and "alice" on a slave maybe totally different people)</em>.</p></li>
 <li><p>This has only been minimally tested.  For example, complex setups or
 asymmetric configs on master and slave, etc. have NOT been tested.</p></li>
-<li><p>This has also not been tested with redirected pushes.  It may not
-work.</p></li>
-<li><p>As with lots of extra features in gitolite, smart http support is not
-on my radar.  Don't ask.</p></li>
-<li><p>If you change permissions using the 'perms' command, they will only go
-across on the next push.  Or, if you know the name of the slave
-server, you can run</p>
+<li><p>Permission changes will only propagate on the next 'git push'.  Of
+course, if you know the name of the slave server, you can run</p>
 
 <pre><code>ssh git@host mirror push slave-server-name repo-name
 </code></pre></li>
+<li><p>Using 'perms' on a slave is allowed but will neither propagate nor
+persist.  They will be overwritten by whatever perms the master has
+(even if it is an empty set) on the next 'git push'.</p></li>
+<li><p>As with lots of extra features in gitolite, smart http support is not
+on my radar.  Don't ask.</p></li>
 </ul>
 
 <p><p>Please test it out and let me know if something surprising happens.  Be
