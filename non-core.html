@@ -85,18 +85,33 @@ than one level between "keydir/" and the actual file).</p></li>
 
 <h2>triggers</h2>
 
+<p>Note that some features need to be enabled in more than one trigger.
+Mirroring is probably the best example -- it needs to hook into the <code>INPUT</code>,
+<code>PRE_GIT</code>, and the <code>POST_GIT</code> triggers to work.</p>
+
+<p>The <code>INPUT</code> triggers are:</p>
+
+<ul>
+<li>CpuTime -- see the <code>POST_GIT</code> section below</li>
+<li>Shell -- see "giving shell access to gitolite users" in <a href="sts.html">this</a> page.</li>
+<li>Alias -- documentation is within the source file Alias.pm</li>
+<li>Mirroring -- see <a href="mirroring.html">doc/mirroring.mkd</a></li>
+</ul>
+
 <p>The <code>PRE_GIT</code> triggers are:</p>
 
 <ul>
-<li><p>partial-copy -- this has its own section later in this page.</p></li>
-<li><p>renice -- this renices the entire job to whatever value you specify.</p></li>
+<li>renice -- this renices the entire job to whatever value you specify.</li>
+<li>Mirroring -- see <a href="mirroring.html">doc/mirroring.mkd</a></li>
+<li>partial-copy -- this has its own section later in this page.</li>
 </ul>
 
 <p>The <code>POST_GIT</code> triggers are:</p>
 
 <ul>
-<li>CpuTime, which is only a sample because it only prints the CPU times data.
-In reality you will want to do something else with it.</li>
+<li>Mirroring -- see <a href="mirroring.html">doc/mirroring.mkd</a></li>
+<li>CpuTime -- this is only a sample because it only prints the CPU times
+data.  In reality you will want to do something else with it.</li>
 </ul>
 
 <p>The <code>POST_COMPILE</code> triggers are:</p>

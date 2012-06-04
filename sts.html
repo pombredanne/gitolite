@@ -225,7 +225,9 @@ example it could be</p>
 
 <pre><code>SHELL_USERS_LIST        =&gt;  "$ENV{HOME}/.gitolite.shell-users",
 </code></pre></li>
-<li><p>add the line <code>'Shell::input',</code> to the <code>INPUT</code> list in the rc file.</p></li>
+<li><p>add the line <code>'Shell::input',</code> to the <code>INPUT</code> list in the rc file.  This
+must be the first item on the list (possibly preceded by CpuTime, if
+you're using that).</p></li>
 <li><p>add the line <code>'post-compile/ssh-authkeys-shell-users',</code> to the
 <code>POST_COMPILE</code> list, <em>after</em> the <code>'post-compile/ssh-authkeys',</code> line.</p></li>
 </ul>
