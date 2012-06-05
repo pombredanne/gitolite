@@ -45,6 +45,7 @@
 <li>...trigger programs</li>
 <li>..."sugar"</li>
 </ul></li>
+<li>appendix 1: notes on the INPUT trigger</li>
 </ul></li>
 </ul>
 
@@ -161,3 +162,54 @@ a listref.  The listrefs point to a list that contains the entire conf file
 contents modified as you like and return a ref to it.</p>
 
 <p>There are a couple of examples in src/syntactic-sugar.</p>
+
+<h2>appendix 1: notes on the INPUT trigger</h2>
+
+<p>Note: some of this won't make sense if you haven't read about <a href="triggers.html">triggers</a>.</p>
+
+<p>The INPUT trigger sequence is designed to set or change environment variables
+or the argument list.  (Side note: this means INPUT triggers have to be
+written as perl modules; they cannot be standalone scripts).  This is a very
+powerful idea so an extended description may be useful.</p>
+
+<p>Sshd invokes gitolite-shell with the SSH_ORIGINAL_COMMAND env var containing
+the git/gitolite command and one argument: the gitolite username.</p>
+
+<ul>
+<li>see <a href="glssh.html">this</a> for details on the latter</li>
+<li>the <em>first</em> thing gitolite does in smart http mode is to use the
+REMOTE_USER and the CGI variables that apache provides to <em>construct</em>
+a fake argument list and a fake SSH_ORIGINAL_COMMAND env var, so the
+rest of the code can stay the same</li>
+</ul>
+
+<p>The INPUT trigger is then run.  The purpose of the input trigger is to ensure
+that the first argument <em>is</em> the gitolite username, and that the
+SSH_ORIGINAL_COMMAND env var contains the actual command to execute.  It can
+also be used to set up any other environment variables that you may decide you
+need.</p>
+
+<p>Wait... didn't we say that's what gitolite-shell gets anyway, just now?</p>
+
+<p>Well, we lied a bit there; it's not always true!</p>
+
+<p>For example, if <a href="sts.html#giving-shell">this</a> feature is used, the first argument <em>may</em>
+be "-s", with the username in the <em>second</em> argument.  Shell.pm deals with
+that.  <font color="gray">(Order matters.  If you use this feature, put the
+<code>'Shell::input',</code> line ahead of the others, since it is the only one prepared
+to deal with username not being the first argument).</font></p>
+
+<p>If you look at CpuTime.pm, you'll see that it's <code>input()</code> function doesn't set
+or change anything, but does set a package variable to record the start time.
+Later, when the same module's <code>post_git()</code> function is invoked, it uses this
+variable to determine elapsed time.</p>
+
+<p><em>(This is a very nice and simple example of how you can implement features by
+latching onto multiple events and sharing data to do something)</em>.</p>
+
+<p>You can even change the reponame the user sees, behind his back.  Alias.pm
+handles that.</p>
+
+<p>Finally, as an exercise for the reader, consider how you would create a brand
+new env var that contains the <em>comment</em> field of the ssh pubkey that was used
+to gain access, using the information <a href="sts.html#kfn">here</a>.</p>

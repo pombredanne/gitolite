@@ -58,6 +58,29 @@ here's an excerpt:</p>
 <p>(As you can see, post-create runs 3 programs that also run from post-compile.
 This is perfectly fine, by the way)</p>
 
+<h2>types of trigger programs</h2>
+
+<p>There are two types of trigger programs.  Standalone scripts are placed in
+src/triggers or its subdirectories.  They are invoked by being added to a
+trigger list (using the path after "src/triggers/", as you can see).  Such
+scripts are quick and easy to write in any language of your choice.</p>
+
+<p>Triggers written as perl modules are placed in src/lib/Gitolite/Triggers.
+They are invoked by being listed with the package+function name, although even
+here the 'Gitolite::Triggers' part is skipped.  Perl modules have to follow
+some conventions (see some of the shipped modules to ideas) but the advantage
+is that they can set environment variables and change the argument list of the
+gitolite-shell program that invokes them.</p>
+
+<p>If this does not make sense, please examine a default install of gitolite,
+paying attention to:</p>
+
+<ul>
+<li>the path names in various trigger lists in the rc file</li>
+<li>corresponding path names in the src/ directory in gitolite source</li>
+<li>and for perl modules, the package names and function names within.</li>
+</ul>
+
 <h2>manually firing triggers</h2>
 
 <p>...from the server command line is easy.  For example:</p>

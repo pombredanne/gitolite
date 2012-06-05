@@ -49,8 +49,8 @@ tricks that gitolite can do.</p>
 <li>step by step</li>
 <li>random tips, tricks, and notes
 <ul>
-<li>giving shell access to gitolite users</li>
-<li>distinguishing one key from another</li>
+<li><a href="sts.html#giving-shell">giving shell access to gitolite users</a></li>
+<li><a href="sts.html#kfn">distinguishing one key from another</a></li>
 <li>simulating ssh-copy-id</li>
 <li>problems with using non-openssh public keys</li>
 <li>windows issues</li>
@@ -210,7 +210,7 @@ client, instead of the default key.  See <a href="sts.html#stsapp3">appendix 3</
 
 <h2>random tips, tricks, and notes</h2>
 
-<h3>giving shell access to gitolite users</h3>
+<h3><a name="giving-shell"></a> giving shell access to gitolite users</h3>
 
 <p>Thanks to an idea from Jesse Keating, a single key can allow both gitolite
 access <em>and</em> shell access.</p>
@@ -235,7 +235,7 @@ you're using that).</p></li>
 <p>Then run <code>gitolite compile; gitolite trigger POST_COMPILE</code> or push a dummy
 change to the admin repo.</p>
 
-<h3>distinguishing one key from another</h3>
+<h3><a name="kfn"></a> distinguishing one key from another</h3>
 
 <p>Since a user can have <a href="users.html#multi-key">more than one key</a>, it is sometimes useful
 to distinguish one key from another.  Sshd does not tell you even the
