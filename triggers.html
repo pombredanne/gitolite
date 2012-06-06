@@ -25,6 +25,18 @@
 </p>
 <h1>gitolite triggers</h1>
 
+<ul>
+<li><a href="triggers.html">gitolite triggers</a>
+<ul>
+<li>intro and sample rc excerpt</li>
+<li>types of trigger programs</li>
+<li>manually firing triggers</li>
+<li>common arguments</li>
+<li>trigger-specific arguments and other details</li>
+<li>tips</li>
+</ul></li>
+</ul>
+
 <h2>intro and sample rc excerpt</h2>
 
 <p>Gitolite fires off external commands at 7 different times.  The <a href="rc.html">rc</a> file
@@ -126,20 +138,36 @@ samples or ask me if you need help writing your own.</p></li>
 <li>user</li>
 <li>'R' or 'W'</li>
 <li>'any'</li>
-<li>result: this is the result of the access() function.  If it contains
-the uppercase word "DENIED", the access was rejected.  Otherwise
-result contains the refex that caused the access to succeed.</li>
-</ul></li>
-<li><p><code>ACCESS_2</code> runs after the second access check, in the update hook.
-Extra arguments:</p>
+<li>result (see notes below)</li>
+</ul>
+
+<p>'result' is the return value of the access() function.  If it contains the
+uppercase word "DENIED", the access was rejected.  Otherwise it is the
+refex that caused the access to succeed.</p>
+
+<p><em>Please note that if access is rejected, gitolite-shell will die as soon
+as it returns from the trigger</em>.</p></li>
+<li><p><code>ACCESS_2</code> runs after the second access check, which is invoked by the
+update hook to check the ref.  Extra arguments:</p>
 
 <ul>
 <li>repo</li>
 <li>user</li>
 <li>any of W, +, C, D, WM, +M, CM, DM</li>
 <li>the ref being updated (e.g., 'refs/heads/master')</li>
-<li>result (see above)</li>
-</ul></li>
+<li>result</li>
+<li>old SHA</li>
+<li>new SHA</li>
+</ul>
+
+<p><code>ACCESS_2</code> also runs on each <a href="vref.html">VREF</a> that gets checked.  In this case
+the "ref" argument will start with "VREF/", and the last two arguments
+won't be passed.</p>
+
+<p>'result' is similar to <code>ACCESS_1</code>, except that it is the <em>update hook</em>
+which dies as soon as access is rejected for the ref or any of the VREFs.
+Control then returns to git, and then to gitolite-shell, so the <code>POST_GIT</code>
+trigger <em>will</em> run.</p></li>
 <li><p><code>PRE_GIT</code> and <code>POST_GIT</code> run just before and after the git command.
 Extra arguments:</p>
 
@@ -171,3 +199,9 @@ file, then all the 'git-config's, gitweb access, and daemon access.</p>
 
 <p>No extra arguments.</p></li>
 </ul>
+
+<h2>tips</h2>
+
+<p>If you have code that latches onto more than one trigger, collecting data
+(such as for logging), then the outputs may be intermixed.  You can record the
+value of the environment variable <code>GL_TID</code> to tie together related entries.</p>
