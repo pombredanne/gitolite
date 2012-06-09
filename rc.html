@@ -125,4 +125,27 @@ require the '@' to be escaped:</p>
 
 <pre><code>DEFAULT_ROLE_PERMS  =&gt;  "READERS \@all\nWRITERS \@senior_devs",
 </code></pre></li>
+<li><p><code>GL_BINDIR2</code>, string</p>
+
+<p>This is useful when you install gitolite system-wide, but want to add or
+override commands, VREFs, triggers, etc., by putting them somewhere in the
+hosting user's home directory (i.e., without requiring root privileges).</p>
+
+<p>Add a new variable <code>GL_BINDIR2</code> to the the rc file.  Example:</p>
+
+<pre><code>GL_BINDIR2 =&gt; "$ENV{HOME}/gitolite/src2",
+</code></pre>
+
+<p>In that directory, create as much of the following directory structure as
+you need to add your programs:</p>
+
+<pre><code>.
+|-- commands
+|-- lib
+|   `-- Gitolite
+|       `-- Triggers
+|-- syntactic-sugar
+|-- triggers
+`-- VREF
+</code></pre></li>
 </ul>
