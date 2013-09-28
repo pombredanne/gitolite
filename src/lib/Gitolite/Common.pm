@@ -12,6 +12,8 @@ package Gitolite::Common;
           usage                             tsh_run
           gen_lfn
           gl_log
+
+          dd
 );
 #>>>
 use Exporter 'import';
@@ -61,6 +63,11 @@ sub dbg {
     for my $i (@_) {
         print STDERR "DBG: " . Dumper($i);
     }
+}
+
+sub dd {
+    local $ENV{D} = 1;
+    dbg(@_);
 }
 
 sub _warn {
@@ -251,17 +258,18 @@ sub gl_log {
     my $tid = $ENV{GL_TID} ||= $$;
 
     my $fh;
-    logger_plus_stderr( "$ts no GL_LOGFILE env var", "$ts $msg" ) if not $ENV{GL_LOGFILE};
-    open my $lfh, ">>", $ENV{GL_LOGFILE} or logger_plus_stderr( "open log failed: $!", $msg );
+    logger_plus_stderr( "errors found before logging could be setup", "$msg" ) if not $ENV{GL_LOGFILE};
+    open my $lfh, ">>", $ENV{GL_LOGFILE}
+      or logger_plus_stderr( "errors found before logfile could be created", "$msg" );
     print $lfh "$ts\t$tid\t$msg\n";
     close $lfh;
 }
 
 sub logger_plus_stderr {
     open my $fh, "|-", "logger" or confess "it's really not my day is it...?\n";
-    for ( "FATAL: have errors but logging failed!\n", @_ ) {
-        print STDERR "$_\n";
-        print $fh "$_\n";
+    for ( @_ ) {
+        print STDERR "FATAL: $_\n";
+        print $fh "FATAL: $_\n";
     }
     exit 1;
 }
