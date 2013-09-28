@@ -184,14 +184,14 @@ sub new_repo {
 }
 
 sub new_wild_repo {
-    my ( $repo, $user ) = @_;
+    my ( $repo, $user, $aa ) = @_;
     _chdir( $rc{GL_REPO_BASE} );
 
-    trigger( 'PRE_CREATE', $repo, $user );
+    trigger( 'PRE_CREATE', $repo, $user, $aa );
     new_repo($repo);
     _print( "$repo.git/gl-creator", $user );
     _print( "$repo.git/gl-perms", "$rc{DEFAULT_ROLE_PERMS}\n" ) if $rc{DEFAULT_ROLE_PERMS};
-    trigger( 'POST_CREATE', $repo, $user );
+    trigger( 'POST_CREATE', $repo, $user, $aa );
 
     _chdir( $rc{GL_ADMIN_BASE} );
 }
@@ -323,14 +323,13 @@ sub store_common {
             $hook_reset++;
         }
 
-        # propagate user hooks
+        # propagate user-defined (custom) hooks to all repos
+        ln_sf( "$rc{LOCAL_CODE}/hooks/common", "*", "$repo.git/hooks" ) if $rc{LOCAL_CODE};
+
+        # override/propagate gitolite defined hooks for all repos
         ln_sf( "$rc{GL_ADMIN_BASE}/hooks/common", "*", "$repo.git/hooks" );
-
-        # propagate admin hook
+        # override/propagate gitolite defined hooks for the admin repo
         ln_sf( "$rc{GL_ADMIN_BASE}/hooks/gitolite-admin", "*", "$repo.git/hooks" ) if $repo eq 'gitolite-admin';
-
-        # g2 diff: no "site-wide" hooks (the stuff in between gitolite hooks
-        # and user hooks) anymore.  I don't think anyone used them anyway...
     }
 }
 

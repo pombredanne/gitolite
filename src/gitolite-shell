@@ -107,8 +107,8 @@ sub main {
     if ( repo_missing($repo) and access( $repo, $user, '^C', 'any' ) !~ /DENIED/ ) {
         require Gitolite::Conf::Store;
         Gitolite::Conf::Store->import;
-        new_wild_repo( $repo, $user );
-        gl_log( 'create', $repo, $user );
+        new_wild_repo( $repo, $user, $aa );
+        gl_log( 'create', $repo, $user, $aa );
     }
 
     # a ref of 'any' signifies that this is a pre-git check, where we don't
@@ -212,6 +212,7 @@ sub http_simulate_ssh_connection {
         my ($verb) = ( $ENV{PATH_INFO} =~ m(^/(\S+)) );
         my $args = $ENV{QUERY_STRING};
         $args =~ s/\+/ /g;
+        $args =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg;
         $ENV{SSH_ORIGINAL_COMMAND} = $verb;
         $ENV{SSH_ORIGINAL_COMMAND} .= " $args" if $args;
         http_print_headers();    # in preparation for the eventual output!
